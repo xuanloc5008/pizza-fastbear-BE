@@ -7,4 +7,11 @@ export declare class UserController {
     register(body: ClientDto): Promise<{
         message: string;
     }>;
+    login(body: ClientDto): Promise<{
+        message: string;
+        access_token?: undefined;
+    } | {
+        message: string;
+        access_token: string;
+    }>;
 }

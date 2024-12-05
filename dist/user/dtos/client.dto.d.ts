@@ -5,4 +5,5 @@ export declare class ClientDto {
     city: string;
     phone_number: string;
     name: string;
+    district: string;
 }

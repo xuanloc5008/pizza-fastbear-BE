@@ -9,39 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ClientDto = void 0;
+exports.OrderDto = void 0;
 const class_validator_1 = require("class-validator");
-class ClientDto {
+const class_transformer_1 = require("class-transformer");
+class OrderDto {
 }
-exports.ClientDto = ClientDto;
+exports.OrderDto = OrderDto;
 __decorate([
-    (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], ClientDto.prototype, "username", void 0);
+    (0, class_validator_1.IsDecimal)({ decimal_digits: '2' }),
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.Min)(0),
+    (0, class_validator_1.Max)(99999999.99),
+    __metadata("design:type", Number)
+], OrderDto.prototype, "price", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], ClientDto.prototype, "password", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], ClientDto.prototype, "ward", void 0);
-__decorate([
+    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], ClientDto.prototype, "city", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], ClientDto.prototype, "phone_number", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], ClientDto.prototype, "name", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], ClientDto.prototype, "district", void 0);
-//# sourceMappingURL=client.dto.js.map
+], OrderDto.prototype, "components", void 0);
+//# sourceMappingURL=order.dto.js.map

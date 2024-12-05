@@ -21,4 +21,8 @@ export class UserController {
             );
         }
     }
+    @Post('client/login')
+    async login(@Body() body: ClientDto) {
+        return await this.userService.login(body);
+    }
 }

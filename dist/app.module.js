@@ -12,12 +12,18 @@ const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const user_module_1 = require("./user/user.module");
 const database_service_1 = require("./database/database.service");
+const jwt_1 = require("@nestjs/jwt");
+const order_module_1 = require("./order/order.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [user_module_1.UserModule],
+        imports: [user_module_1.UserModule, jwt_1.JwtModule.register({
+                global: true,
+                secret: 'duongthanhtuss',
+                signOptions: { expiresIn: '1h' },
+            }), order_module_1.OrderModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, database_service_1.DatabaseService],
         exports: [database_service_1.DatabaseService]

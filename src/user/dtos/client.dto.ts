@@ -15,4 +15,6 @@ export class ClientDto {
     phone_number: string;
     @IsString()
     name: string;
+    @IsString()
+    district: string;
 }

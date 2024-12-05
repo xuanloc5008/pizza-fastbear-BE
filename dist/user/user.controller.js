@@ -31,6 +31,9 @@ let UserController = class UserController {
             throw new common_1.HttpException('Failed to register user', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    async login(body) {
+        return await this.userService.login(body);
+    }
 };
 exports.UserController = UserController;
 __decorate([
@@ -40,6 +43,13 @@ __decorate([
     __metadata("design:paramtypes", [client_dto_1.ClientDto]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "register", null);
+__decorate([
+    (0, common_1.Post)('client/login'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [client_dto_1.ClientDto]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "login", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService, database_service_1.DatabaseService])
