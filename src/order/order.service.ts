@@ -16,4 +16,10 @@ export class OrderService {
             ]
         );
     }
+    async getOrders(c_id: string) {
+        return await this.dbService.query('SELECT * FROM Orders WHERE customer_id = @p1', [{ name: 'p1', value: c_id }]);
+    }
+    async getAllOrders(){
+        return await this.dbService.query('SELECT * FROM Orders');
+    }
 }

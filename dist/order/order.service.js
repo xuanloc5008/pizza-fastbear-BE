@@ -23,6 +23,12 @@ let OrderService = class OrderService {
             { name: 'p3', value: body.price }
         ]);
     }
+    async getOrders(c_id) {
+        return await this.dbService.query('SELECT * FROM Orders WHERE customer_id = @p1', [{ name: 'p1', value: c_id }]);
+    }
+    async getAllOrders() {
+        return await this.dbService.query('SELECT * FROM Orders');
+    }
 };
 exports.OrderService = OrderService;
 exports.OrderService = OrderService = __decorate([

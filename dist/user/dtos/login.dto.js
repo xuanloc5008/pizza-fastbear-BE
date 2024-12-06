@@ -9,34 +9,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OrderDto = void 0;
-const class_validator_1 = require("class-validator");
-const class_transformer_1 = require("class-transformer");
+exports.loginDTO = void 0;
 const swagger_1 = require("@nestjs/swagger");
-class OrderDto {
+const class_validator_1 = require("class-validator");
+class loginDTO {
 }
-exports.OrderDto = OrderDto;
+exports.loginDTO = loginDTO;
 __decorate([
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsDecimal)({ decimal_digits: '2' }),
-    (0, class_transformer_1.Type)(() => Number),
-    (0, class_validator_1.Min)(0),
-    (0, class_validator_1.Max)(99999999.99),
-    (0, swagger_1.ApiProperty)({
-        description: 'Price',
-        example: 10000,
-        required: true
-    }),
-    __metadata("design:type", Number)
-], OrderDto.prototype, "price", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
     (0, swagger_1.ApiProperty)({
-        description: 'Components',
-        example: "Ratatoullie",
+        description: 'username',
+        example: "Khanhtat",
         required: true
     }),
     __metadata("design:type", String)
-], OrderDto.prototype, "components", void 0);
-//# sourceMappingURL=order.dto.js.map
+], loginDTO.prototype, "username", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'password',
+        example: "mamamasadthu",
+        required: true
+    }),
+    __metadata("design:type", String)
+], loginDTO.prototype, "password", void 0);
+//# sourceMappingURL=login.dto.js.map

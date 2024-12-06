@@ -15,8 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderController = void 0;
 const common_1 = require("@nestjs/common");
 const order_service_1 = require("./order.service");
-const common_2 = require("@nestjs/common");
 const order_dto_1 = require("./dtos/order.dto");
+const swagger_1 = require("@nestjs/swagger");
 let OrderController = class OrderController {
     constructor(orderService) {
         this.orderService = orderService;
@@ -25,18 +25,77 @@ let OrderController = class OrderController {
         console.log(c_id);
         return await this.orderService.placeOrder(body, c_id);
     }
+    async getOrders(c_id) {
+        return await this.orderService.getOrders(c_id);
+    }
+    async getAllOrders() {
+        return await this.orderService.getAllOrders();
+    }
 };
 exports.OrderController = OrderController;
 __decorate([
-    (0, common_2.Post)('place-order'),
-    __param(0, (0, common_2.Body)()),
+    (0, common_1.Post)('place-order'),
+    (0, swagger_1.ApiOperation)({ summary: 'Place a new order for a customer' }),
+    (0, swagger_1.ApiResponse)({
+        status: 201,
+        description: 'Order placed successfully',
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 400,
+        description: 'Invalid input data',
+    }),
+    (0, swagger_1.ApiQuery)({
+        name: 'c_id',
+        description: 'Customer ID',
+        required: true,
+        example: '123e4567-e89b-12d3-a456-426614174000',
+    }),
+    (0, swagger_1.ApiBody)({
+        type: order_dto_1.OrderDto,
+        description: 'Order details',
+    }),
+    __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Query)('c_id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [order_dto_1.OrderDto, String]),
     __metadata("design:returntype", Promise)
 ], OrderController.prototype, "placeOrder", null);
+__decorate([
+    (0, common_1.Get)('get-order'),
+    (0, swagger_1.ApiOperation)({ summary: 'Retrieve orders for a specific customer' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Orders retrieved successfully',
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 404,
+        description: 'Customer not found',
+    }),
+    (0, swagger_1.ApiQuery)({
+        name: 'c_id',
+        description: 'Customer ID to fetch orders for',
+        required: true,
+        example: '123e4567-e89b-12d3-a456-426614174000',
+    }),
+    __param(0, (0, common_1.Query)('c_id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], OrderController.prototype, "getOrders", null);
+__decorate([
+    (0, common_1.Get)('get-orders'),
+    (0, swagger_1.ApiOperation)({ summary: 'Retrieve all orders in the system' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Orders retrieved successfully',
+    }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], OrderController.prototype, "getAllOrders", null);
 exports.OrderController = OrderController = __decorate([
     (0, common_1.Controller)('order'),
+    (0, swagger_1.ApiTags)('Order'),
     __metadata("design:paramtypes", [order_service_1.OrderService])
 ], OrderController);
 //# sourceMappingURL=order.controller.js.map
