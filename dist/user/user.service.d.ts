@@ -22,4 +22,6 @@ export declare class UserService {
     }>;
     deleteClientbyID(id: string): Promise<any>;
     deleteStaff(id: string): Promise<any>;
+    updateClient(id: string, body: ClientDto): Promise<unknown>;
+    updateStaff(id: string, body: EmployeeDto): Promise<unknown>;
 }

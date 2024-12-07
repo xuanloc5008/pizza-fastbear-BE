@@ -52,6 +52,12 @@ let UserController = class UserController {
     async deleteStaff(id) {
         return this.userService.deleteStaff(id);
     }
+    async updateClient(id, body) {
+        return await this.userService.updateClient(id, body);
+    }
+    async updateStaff(id, body) {
+        return await this.userService.updateStaff(id, body);
+    }
 };
 exports.UserController = UserController;
 __decorate([
@@ -147,6 +153,32 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "deleteStaff", null);
+__decorate([
+    (0, common_1.Put)('update-client-by-id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Update a client by ID' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Client updated successfully',
+    }),
+    __param(0, (0, common_1.Query)('c_id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, client_dto_1.ClientDto]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "updateClient", null);
+__decorate([
+    (0, common_1.Put)('update-staff-by-id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Update a staff by ID' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Staff updated successfully',
+    }),
+    __param(0, (0, common_1.Query)('e_id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, staff_dto_1.EmployeeDto]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "updateStaff", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('user'),
     (0, swagger_1.ApiTags)('User'),

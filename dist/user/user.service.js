@@ -90,6 +90,12 @@ let UserService = class UserService {
     async deleteStaff(id) {
         return await this.dbService.query('DELETE FROM Employee WHERE e_id = @p1', [{ name: 'p1', value: id }]);
     }
+    async updateClient(id, body) {
+        return await this.dbService.query('UPDATE Customer SET (phone_no, C_username, C_password, ward, city, name, district) WHERE id = @p1', [{ name: 'p1', value: id }, { name: 'p2', value: body.phone_number }, { name: 'p3', value: body.username }, { name: 'p4', value: body.ward }, { name: 'p5', value: body.city }, { name: 'p6', value: body.name }, { name: 'p7', value: body.district }]);
+    }
+    async updateStaff(id, body) {
+        return await this.dbService.query('UPDATE Employee SET (last_name, first_name, ward, district, city, phone_no, store_id) WHERE e_id = @p1', [{ name: 'p1', value: id }, { name: 'p2', value: body.last_name }, { name: 'p3', value: body.first_name }, { name: 'p4', value: body.ward }, { name: 'p5', value: body.district }, { name: 'p6', value: body.city }, { name: 'p7', value: body.phone_no }, { name: 'p8', value: body.store_id }]);
+    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([

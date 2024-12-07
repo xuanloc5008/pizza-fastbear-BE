@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpException, HttpStatus, Delete, Query } from '@nestjs/common';
+import { Controller, Post, Body, HttpException, HttpStatus, Delete, Query, Put } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ClientDto } from './dtos/client.dto';
 import { DatabaseService } from 'src/database/database.service';
@@ -110,5 +110,23 @@ export class UserController {
         @Query('e_id') id: string
     ){
         return this.userService.deleteStaff(id);
+    }
+    @Put('update-client-by-id')
+    @ApiOperation({ summary: 'Update a client by ID' })
+    @ApiResponse({
+        status: 200,
+        description: 'Client updated successfully',
+    })
+    async updateClient(@Query('c_id') id: string, @Body() body: ClientDto){
+        return await this.userService.updateClient(id, body);
+    }
+    @Put('update-staff-by-id')
+    @ApiOperation({ summary: 'Update a staff by ID' })
+    @ApiResponse({
+        status: 200,
+        description: 'Staff updated successfully',
+    })  
+    async updateStaff(@Query('e_id') id: string, @Body() body: EmployeeDto){
+        return await this.userService.updateStaff(id, body);
     }
 }
