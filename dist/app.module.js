@@ -23,7 +23,7 @@ exports.AppModule = AppModule = __decorate([
         imports: [user_module_1.UserModule, jwt_1.JwtModule.register({
                 global: true,
                 secret: 'duongthanhtuss',
-                signOptions: { expiresIn: '1h' },
+                signOptions: { expiresIn: '1m' },
             }), order_module_1.OrderModule, menu_module_1.MenuModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, database_service_1.DatabaseService],
