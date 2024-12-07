@@ -35,10 +35,26 @@ export class MenuService {
             'SELECT * FROM Dishes WHERE id = @p1',[{name: 'p1', value: id}]
         );
     }
-    async updateDishesbyID(id: string){
+    async updateDishesbyID(id: string, body: menuDTO){
         const update = this.dbService.query(
-            'SELECT * FROM Dishes WHERE id = @p1', [{name: 'p1', value: id}]
+            'UPDATE Dishes SET (price, description, name, recipes) WHERE id = @p1', 
+            [
+                {name: 'p1', value: id},
+                {name: 'p2', value: body.price},
+                {name: 'p3', value: body.description},
+                {name: 'p4', value: body.name},
+                {name: 'p5', value: body.recipes}
+            ]
         );
     }
-    
+    async deleteDish(id: string){
+        return await this.dbService.query(
+            'DELETE FROM Dishes WHERE id = @p1', [{name: 'p1', value: id}]
+        );
+    }
+    async searchDishes(query: string){
+        return await this.dbService.query(
+            'SELECT * FROM Dishes WHERE name LIKE @p1 OR description LIKE @p2', [{name: 'p1', value: query}, {name: 'p2', value: query}]
+        );
+    }
 }

@@ -30,6 +30,15 @@ let MenuController = class MenuController {
     async viewDishesID(id) {
         return this.menu.viewDishesbyID(id);
     }
+    async updateDish(id, body) {
+        return this.menu.updateDishesbyID(id, body);
+    }
+    async deleteDish(id) {
+        return this.menu.deleteDish(id);
+    }
+    async searchDishes(query) {
+        return this.menu.searchDishes(query);
+    }
 };
 exports.MenuController = MenuController;
 __decorate([
@@ -81,6 +90,73 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], MenuController.prototype, "viewDishesID", null);
+__decorate([
+    (0, common_1.Put)('update'),
+    (0, swagger_1.ApiOperation)({ summary: 'Update an existing dish' }),
+    (0, swagger_1.ApiQuery)({
+        name: 'd_id',
+        description: 'ID of the dish to update.',
+        required: true,
+        type: String,
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Dish updated successfully.',
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 404,
+        description: 'Dish not found.',
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 400,
+        description: 'Invalid request payload.',
+    }),
+    __param(0, (0, common_1.Query)('d_id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, menu_dto_1.menuDTO]),
+    __metadata("design:returntype", Promise)
+], MenuController.prototype, "updateDish", null);
+__decorate([
+    (0, common_1.Delete)('delete'),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete a dish by ID' }),
+    (0, swagger_1.ApiQuery)({
+        name: 'd_id',
+        description: 'ID of the dish to delete.',
+        required: true,
+        type: String,
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Dish deleted successfully.',
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 404,
+        description: 'Dish not found.',
+    }),
+    __param(0, (0, common_1.Query)('d_id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], MenuController.prototype, "deleteDish", null);
+__decorate([
+    (0, common_1.Get)('search'),
+    (0, swagger_1.ApiOperation)({ summary: 'Search dishes by name or description' }),
+    (0, swagger_1.ApiQuery)({
+        name: 'query',
+        description: 'Search term to look for in dish names or descriptions.',
+        required: true,
+        type: String,
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Search results retrieved successfully.',
+    }),
+    __param(0, (0, common_1.Query)('query')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], MenuController.prototype, "searchDishes", null);
 exports.MenuController = MenuController = __decorate([
     (0, common_1.Controller)('menu'),
     (0, swagger_1.ApiTags)('Menu'),

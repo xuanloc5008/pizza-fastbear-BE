@@ -8,5 +8,7 @@ export declare class MenuService {
     }>;
     viewDishes(): Promise<unknown>;
     viewDishesbyID(id: string): Promise<unknown>;
-    updateDishesbyID(id: string): Promise<void>;
+    updateDishesbyID(id: string, body: menuDTO): Promise<void>;
+    deleteDish(id: string): Promise<unknown>;
+    searchDishes(query: string): Promise<unknown>;
 }
