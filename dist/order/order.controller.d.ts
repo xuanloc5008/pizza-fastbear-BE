@@ -6,4 +6,6 @@ export declare class OrderController {
     placeOrder(body: OrderDto, c_id: string): Promise<unknown>;
     getOrders(c_id: string): Promise<unknown>;
     getAllOrders(): Promise<unknown>;
+    deleteOrder(id: string): Promise<unknown>;
+    updateOrder(id: string, body: OrderDto): Promise<unknown>;
 }

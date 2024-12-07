@@ -36,7 +36,7 @@ export class MenuService {
         );
     }
     async updateDishesbyID(id: string, body: menuDTO){
-        const update = this.dbService.query(
+        return await this.dbService.query(
             'UPDATE Dishes SET (price, description, name, recipes) WHERE id = @p1', 
             [
                 {name: 'p1', value: id},

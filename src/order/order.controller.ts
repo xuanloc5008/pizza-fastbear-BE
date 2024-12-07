@@ -1,4 +1,4 @@
-import { Controller, Param, Query, Get, Post, Body } from '@nestjs/common';
+import { Controller, Param, Query, Get, Post, Body, Delete, Put } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { OrderDto } from './dtos/order.dto';
 import { ApiOperation, ApiResponse, ApiTags, ApiQuery, ApiBody } from '@nestjs/swagger';
@@ -36,7 +36,7 @@ export class OrderController {
         return await this.orderService.placeOrder(body, c_id);
     }
 
-    @Get('get-order')
+    @Get('get-order-by-id')
     @ApiOperation({ summary: 'Retrieve orders for a specific customer' })
     @ApiResponse({
         status: 200,
@@ -64,5 +64,24 @@ export class OrderController {
     })
     async getAllOrders() {
         return await this.orderService.getAllOrders();
+    }
+
+    @Delete('delete-order-by-id')
+    @ApiOperation({ summary: 'Delete an order by ID' })
+    @ApiResponse({
+        status: 200,
+        description: 'Orders deleted successfully',
+    })
+    async deleteOrder(@Query('id') id: string) {
+        return await this.orderService.deleteOrder(id);
+    }
+    @Put('update-order-by-id')
+    @ApiOperation({ summary: 'Update an order by ID' })
+    @ApiResponse({
+        status: 200,
+        description: 'Orders updated successfully',
+    })
+    async updateOrder(@Query('id') id: string, @Body() body: OrderDto) {
+        return await this.orderService.updateOrder(id, body);
     }
 }

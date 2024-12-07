@@ -31,6 +31,12 @@ let OrderController = class OrderController {
     async getAllOrders() {
         return await this.orderService.getAllOrders();
     }
+    async deleteOrder(id) {
+        return await this.orderService.deleteOrder(id);
+    }
+    async updateOrder(id, body) {
+        return await this.orderService.updateOrder(id, body);
+    }
 };
 exports.OrderController = OrderController;
 __decorate([
@@ -61,7 +67,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], OrderController.prototype, "placeOrder", null);
 __decorate([
-    (0, common_1.Get)('get-order'),
+    (0, common_1.Get)('get-order-by-id'),
     (0, swagger_1.ApiOperation)({ summary: 'Retrieve orders for a specific customer' }),
     (0, swagger_1.ApiResponse)({
         status: 200,
@@ -93,6 +99,31 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], OrderController.prototype, "getAllOrders", null);
+__decorate([
+    (0, common_1.Delete)('delete-order-by-id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete an order by ID' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Orders deleted successfully',
+    }),
+    __param(0, (0, common_1.Query)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], OrderController.prototype, "deleteOrder", null);
+__decorate([
+    (0, common_1.Put)('update-order-by-id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Update an order by ID' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Orders updated successfully',
+    }),
+    __param(0, (0, common_1.Query)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, order_dto_1.OrderDto]),
+    __metadata("design:returntype", Promise)
+], OrderController.prototype, "updateOrder", null);
 exports.OrderController = OrderController = __decorate([
     (0, common_1.Controller)('order'),
     (0, swagger_1.ApiTags)('Order'),

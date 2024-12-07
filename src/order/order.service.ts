@@ -22,4 +22,10 @@ export class OrderService {
     async getAllOrders(){
         return await this.dbService.query('SELECT * FROM Orders');
     }
+    async deleteOrder(id: string){
+        return await this.dbService.query('DELETE FROM Orders WHERE id = @p1', [{name: 'p1', value: id}]);
+    }
+    async updateOrder(id: string, body: OrderDto){
+        return await this.dbService.query('UPDATE Orders SET (components, price) WHERE id = @p1', [{name: 'p1', value: id}, {name: 'p2', value: body.components}, {name: 'p3', value: body.price}]);
+    }
 }
