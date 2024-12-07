@@ -1,17 +1,23 @@
-import { Controller, Post, Body, HttpException, HttpStatus, Delete, Query, Put } from '@nestjs/common';
+import { Controller, Post, Body, HttpException, HttpStatus, Delete, Query, Put, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ClientDto } from './dtos/client.dto';
 import { DatabaseService } from 'src/database/database.service';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { EmployeeDto } from './dtos/staff.dto';
 import { loginDTO } from './dtos/login.dto';
+// import { JwtGuard } from './guards/jwt.guards';
+// import { RoleGuard } from './guards/role.guards';
+// import { Roles } from './decorators/roles.decorator';
 @Controller('user')
 @ApiTags('User')
+// @UseGuards(JwtGuard)
 export class UserController {
     constructor(private readonly userService: UserService, database: DatabaseService) {
         database.onApplicationShutdown();
     }
     @Post('client/register')
+    // @UseGuards(JwtGuard, RoleGuard)
+    // @Roles('admin')
     @ApiOperation({ summary: 'Register a new client' })
     @ApiResponse({
         status: 201,
@@ -37,6 +43,8 @@ export class UserController {
         }
     }
     @Post('staff/register')
+    // @UseGuards(JwtGuard, RoleGuard)
+    // @Roles('admin')
     @ApiOperation({ summary: 'Register a new staff' })
     @ApiResponse({
         status: 201,
@@ -82,6 +90,8 @@ export class UserController {
         return await this.userService.login(body);
     }
     @Delete('client/deleteClient')
+    // @UseGuards(JwtGuard, RoleGuard)
+    // @Roles('admin')
     @ApiOperation({summary: 'Delete a client'})
     @ApiResponse({
         status: 200,
@@ -97,6 +107,8 @@ export class UserController {
         return this.userService.deleteClientbyID(id);
     }
     @Delete('staff/delete')
+    // @UseGuards(JwtGuard, RoleGuard)
+    // @Roles('admin')
     @ApiOperation({summary: 'Delete a staff'})
     @ApiResponse({
         status: 200,
@@ -112,6 +124,8 @@ export class UserController {
         return this.userService.deleteStaff(id);
     }
     @Put('update-client-by-id')
+    // @UseGuards(JwtGuard, RoleGuard)
+    // @Roles('admin')
     @ApiOperation({ summary: 'Update a client by ID' })
     @ApiResponse({
         status: 200,
@@ -121,6 +135,8 @@ export class UserController {
         return await this.userService.updateClient(id, body);
     }
     @Put('update-staff-by-id')
+    // @UseGuards(JwtGuard, RoleGuard)
+    // @Roles('admin')
     @ApiOperation({ summary: 'Update a staff by ID' })
     @ApiResponse({
         status: 200,

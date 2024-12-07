@@ -1,10 +1,12 @@
-import { Body, Controller, Post, Get, Query, Delete, Put } from '@nestjs/common';
+import { Body, Controller, Post, Get, Query, Delete, Put, UseGuards } from '@nestjs/common';
 import { MenuService } from './menu.service';
 import { menuDTO } from './dtos/menu.dto';
 import { ApiOperation, ApiResponse, ApiTags, ApiQuery } from '@nestjs/swagger';
+import { JwtGuard } from '../user/guards/jwt.guards';
 
 @Controller('menu')
 @ApiTags('Menu')
+@UseGuards(JwtGuard)
 export class MenuController {
     constructor(private readonly menu: MenuService) {}
 
