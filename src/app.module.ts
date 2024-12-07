@@ -10,7 +10,7 @@ import { MenuModule } from './menu/menu.module';
   imports: [UserModule, JwtModule.register({
     global: true,
     secret: 'duongthanhtuss',
-    signOptions: { expiresIn: '1m' },
+    signOptions: { expiresIn: '10' },
   }), OrderModule, MenuModule],
   controllers: [AppController],
   providers: [AppService, DatabaseService],
