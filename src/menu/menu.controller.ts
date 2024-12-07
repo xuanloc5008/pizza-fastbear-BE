@@ -6,7 +6,6 @@ import { JwtGuard } from '../user/guards/jwt.guards';
 
 @Controller('menu')
 @ApiTags('Menu')
-@UseGuards(JwtGuard)
 export class MenuController {
     constructor(private readonly menu: MenuService) {}
 

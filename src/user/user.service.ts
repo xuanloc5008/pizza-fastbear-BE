@@ -85,11 +85,11 @@ export class UserService {
         if (!isMatch) {
             return { message: 'Invalid credentials.' };
         }
-
         const payload = { 
             username: user[0].C_username,
             sub: user[0].id, 
-            password: user[0].C_password
+            password: user[0].C_password,
+            
         };
         
         const token = await this.jwtService.signAsync(payload);
