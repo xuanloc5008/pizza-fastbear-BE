@@ -1,7 +1,7 @@
 import { Body, Controller, Post, Get, Query, Delete, Put, UseGuards } from '@nestjs/common';
 import { MenuService } from './menu.service';
 import { menuDTO } from './dtos/menu.dto';
-import { ApiOperation, ApiResponse, ApiTags, ApiQuery } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtGuard } from '../user/guards/jwt.guards';
 
 @Controller('menu')
@@ -9,7 +9,8 @@ import { JwtGuard } from '../user/guards/jwt.guards';
 export class MenuController {
     constructor(private readonly menu: MenuService) {}
 
-    @Post('add')
+    @ApiBearerAuth('JWT Auth')
+    @UseGuards(JwtGuard)
     @ApiOperation({ summary: 'Add a new dish' })
     @ApiResponse({
         status: 201,
@@ -19,6 +20,7 @@ export class MenuController {
         status: 400,
         description: 'Invalid request payload.',
     })
+    @Post('add')
     async addDishes(@Body() body: menuDTO) {
         return this.menu.addDishes(body);
     }

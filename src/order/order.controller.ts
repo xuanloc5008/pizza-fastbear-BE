@@ -1,7 +1,7 @@
 import { Controller, Param, Query, Get, Post, Body, Delete, Put, UseGuards } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { OrderDto } from './dtos/order.dto';
-import { ApiOperation, ApiResponse, ApiTags, ApiQuery, ApiBody } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags, ApiQuery, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtGuard } from '../user/guards/jwt.guards';
 @Controller('order')
 @ApiTags('Order')
@@ -9,7 +9,8 @@ export class OrderController {
     constructor(private readonly orderService: OrderService) {}
 
     @Post('place-order')
-    // @UseGuards(JwtGuard)
+    @UseGuards(JwtGuard)
+    @ApiBearerAuth('JWT Auth')
     @ApiOperation({ summary: 'Place a new order for a customer' })
     @ApiResponse({
         status: 201,
@@ -39,6 +40,8 @@ export class OrderController {
 
     @Get('get-order-by-id')
     // @UseGuards(JwtGuard)
+    @UseGuards(JwtGuard)
+    @ApiBearerAuth('JWT Auth')
     @ApiOperation({ summary: 'Retrieve orders for a specific customer' })
     @ApiResponse({
         status: 200,
@@ -60,6 +63,8 @@ export class OrderController {
 
     @Get('get-orders')
     // @UseGuards(JwtGuard)
+    @UseGuards(JwtGuard)
+    @ApiBearerAuth('JWT Auth')
     @ApiOperation({ summary: 'Retrieve all orders in the system' })
     @ApiResponse({
         status: 200,
@@ -71,6 +76,8 @@ export class OrderController {
 
     @Delete('delete-order-by-id')
     // @UseGuards(JwtGuard)
+    @UseGuards(JwtGuard)
+    @ApiBearerAuth('JWT Auth')
     @ApiOperation({ summary: 'Delete an order by ID' })
     @ApiResponse({
         status: 200,
@@ -81,6 +88,8 @@ export class OrderController {
     }
     @Put('update-order-by-id')
     // @UseGuards(JwtGuard)
+    @UseGuards(JwtGuard)
+    @ApiBearerAuth('JWT Auth')
     @ApiOperation({ summary: 'Update an order by ID' })
     @ApiResponse({
         status: 200,

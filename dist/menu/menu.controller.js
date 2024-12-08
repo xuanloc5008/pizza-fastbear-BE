@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const menu_service_1 = require("./menu.service");
 const menu_dto_1 = require("./dtos/menu.dto");
 const swagger_1 = require("@nestjs/swagger");
+const jwt_guards_1 = require("../user/guards/jwt.guards");
 let MenuController = class MenuController {
     constructor(menu) {
         this.menu = menu;
@@ -42,7 +43,8 @@ let MenuController = class MenuController {
 };
 exports.MenuController = MenuController;
 __decorate([
-    (0, common_1.Post)('add'),
+    (0, swagger_1.ApiBearerAuth)('JWT Auth'),
+    (0, common_1.UseGuards)(jwt_guards_1.JwtGuard),
     (0, swagger_1.ApiOperation)({ summary: 'Add a new dish' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
@@ -52,6 +54,7 @@ __decorate([
         status: 400,
         description: 'Invalid request payload.',
     }),
+    (0, common_1.Post)('add'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [menu_dto_1.menuDTO]),

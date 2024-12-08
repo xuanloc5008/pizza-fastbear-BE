@@ -6,10 +6,15 @@ const app_module_1 = require("./app.module");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     const config = new swagger_1.DocumentBuilder()
-        .setTitle('Pizza API')
-        .setDescription('API documentation for the Pizzafastbear service')
+        .setTitle('NestJS API')
+        .setDescription('The API description')
         .setVersion('1.0')
-        .addTag('Orders')
+        .addBearerAuth({
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+    }, 'JWT Auth')
+        .addTag('api')
         .build();
     const document = swagger_1.SwaggerModule.createDocument(app, config);
     swagger_1.SwaggerModule.setup('api', app, document);

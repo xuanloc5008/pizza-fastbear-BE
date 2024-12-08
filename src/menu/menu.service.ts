@@ -15,12 +15,13 @@ export class MenuService {
             return {message: 'Dish already exists'};
         }
         await this.dbService.query(
-            'INSERT INTO Dishes (id, price, description, name, recipes) VALUES (NEWID(), @p1, @p2, @p3, @p4)',
+            'INSERT INTO Dishes (id, price, description, name, recipes, images) VALUES (NEWID(), @p1, @p2, @p3, @p4, @p5)',
             [
                 {name: 'p1', value: body.price},
                 {name: 'p2', value: body.description},
                 {name: 'p3', value: body.name},
-                {name: 'p4', value: body.recipes}
+                {name: 'p4', value: body.recipes},
+                {name: 'p5', value: body.images}
             ]
         )
         return {message: 'add successfull'};

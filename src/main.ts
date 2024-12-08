@@ -6,12 +6,18 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('Pizza API')
-    .setDescription('API documentation for the Pizzafastbear service')
+    .setTitle('NestJS API')
+    .setDescription('The API description')
     .setVersion('1.0')
-    .addTag('Orders')
-    // Add bearer auth if you're using JWT
-    // .addBearerAuth()
+    .addBearerAuth(
+        {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT',
+        },
+        'JWT Auth', // Ensure this matches @ApiBearerAuth in the controller
+    )
+    .addTag('api')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

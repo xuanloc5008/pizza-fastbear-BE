@@ -3,4 +3,5 @@ export declare class menuDTO {
     description: string;
     name: string;
     recipes: string;
+    images: string;
 }

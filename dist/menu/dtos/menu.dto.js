@@ -51,4 +51,13 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], menuDTO.prototype, "recipes", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'image link',
+        example: "https://th.bing.com/th/id/R.70b387cca17bf279da5909c3fcfe51b3?rik=I06xNoqSmyhvqg&riu=http%3a%2f%2fimages1.fanpop.com%2fimages%2fimage_uploads%2fRatatouille-ratatouille-847440_1280_1024.jpg&ehk=24ULC8KcOa1hdiUQ8Zj8MLpgD3ZnZvD8A60hoE6VMc0%3d&risl=&pid=ImgRaw&r=0",
+        required: true
+    }),
+    __metadata("design:type", String)
+], menuDTO.prototype, "images", void 0);
 //# sourceMappingURL=menu.dto.js.map
