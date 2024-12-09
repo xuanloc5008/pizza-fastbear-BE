@@ -3,14 +3,17 @@ import { MenuService } from './menu.service';
 import { menuDTO } from './dtos/menu.dto';
 import { ApiOperation, ApiResponse, ApiTags, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtGuard } from '../user/guards/jwt.guards';
+import { Role, Roles } from 'src/user/decorators/roles.decorator';
 
 @Controller('menu')
 @ApiTags('Menu')
+@UseGuards(JwtGuard)
+@Roles(Role.ADMIN, Role.CLIENT, Role.EMPLOYEE)
+@ApiBearerAuth('JWT Auth')
 export class MenuController {
     constructor(private readonly menu: MenuService) {}
 
     @ApiBearerAuth('JWT Auth')
-    @UseGuards(JwtGuard)
     @ApiOperation({ summary: 'Add a new dish' })
     @ApiResponse({
         status: 201,

@@ -20,4 +20,6 @@ export declare class EmployeeDto {
     evaluation_date?: string;
     score?: number;
     feedbacks?: string;
+    username?: string;
+    password?: string;
 }

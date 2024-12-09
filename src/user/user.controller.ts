@@ -1,148 +1,250 @@
-import { Controller, Post, Body, HttpException, HttpStatus, Delete, Query, Put, UseGuards } from '@nestjs/common';
-import { UserService } from './user.service';
-import { ClientDto } from './dtos/client.dto';
-import { DatabaseService } from 'src/database/database.service';
-import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
-import { EmployeeDto } from './dtos/staff.dto';
-import { loginDTO } from './dtos/login.dto';
-// import { JwtGuard } from './guards/jwt.guards';
-// import { RoleGuard } from './guards/role.guards';
-// import { Roles } from './decorators/roles.decorator';
-@Controller('user')
-@ApiTags('User')
-// @UseGuards(JwtGuard)
-export class UserController {
-    constructor(private readonly userService: UserService, database: DatabaseService) {
-        database.onApplicationShutdown();
+import {
+    Controller,
+    Post,
+    Body,
+    HttpException,
+    HttpStatus,
+    Delete,
+    Query,
+    Put,
+    UseGuards,
+    Get,
+  } from '@nestjs/common';
+  import { UserService } from './user.service';
+  import { ClientDto } from './dtos/client.dto';
+  import { DatabaseService } from 'src/database/database.service';
+  import { ApiTags, ApiOperation, ApiResponse, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
+  import { EmployeeDto } from './dtos/staff.dto';
+  import { loginDTO } from './dtos/login.dto';
+  import { JwtGuard } from './guards/jwt.guards';
+  import { Roles, Role } from './decorators/roles.decorator';
+  import { RolesGuard } from './guards/role.guards';
+  @Controller('user')
+  @ApiTags('User')
+  export class UserController {
+    constructor(
+      private readonly userService: UserService,
+      private readonly database: DatabaseService,
+    ) {
+      database.onApplicationShutdown();
     }
+  
     @Post('client/register')
-    // @UseGuards(JwtGuard, RoleGuard)
-    // @Roles('admin')
     @ApiOperation({ summary: 'Register a new client' })
     @ApiResponse({
-        status: 201,
-        description: 'User successfully registered',
+      status: 201,
+      description: 'Client successfully registered',
     })
     @ApiResponse({
-        status: 500,
-        description: 'Internal server error while registering user',
+      status: 500,
+      description: 'Internal server error while registering client',
     })
     @ApiBody({
-        type: ClientDto,
-        description: 'Client registration details',
+      type: ClientDto,
+      description: 'Client registration details',
     })
-    async register(@Body() body: ClientDto) {
-        try {
-            console.log(body);
-            return await this.userService.register(body);
-        } catch (error) {
-            throw new HttpException(
-                'Failed to register user',
-                HttpStatus.INTERNAL_SERVER_ERROR
-            );
-        }
+    async registerClient(@Body() body: ClientDto) {
+      try {
+        console.log(body);
+        return await this.userService.register(body);
+      } catch (error) {
+        throw new HttpException(
+          'Failed to register client',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
     }
+  
     @Post('staff/register')
-    // @UseGuards(JwtGuard, RoleGuard)
-    // @Roles('admin')
-    @ApiOperation({ summary: 'Register a new staff' })
+    @ApiBearerAuth('JWT Auth')
+    @UseGuards(JwtGuard, RolesGuard) 
+    @Roles(Role.ADMIN)
+    @ApiOperation({ summary: 'Register a new staff member' })
     @ApiResponse({
-        status: 201,
-        description: 'User successfully registered',
+      status: 201,
+      description: 'Staff successfully registered',
     })
     @ApiResponse({
-        status: 500,
-        description: 'Internal server error while registering user',
+      status: 500,
+      description: 'Internal server error while registering staff',
     })
     @ApiBody({
-        type: ClientDto,
-        description: 'Client registration details',
+      type: EmployeeDto,
+      description: 'Staff registration details',
     })
     async registerStaff(
-        @Body() body: EmployeeDto,
-        @Query('e_id') id: string
+      @Body() body: EmployeeDto,
+      @Query('store_id') storeId: string,
     ) {
-        try {
-            console.log(body);
-            return await this.userService.staffRegister(body, id);
-        } catch (error) {
-            throw new HttpException(
-                'Failed to register staff',
-                HttpStatus.INTERNAL_SERVER_ERROR
-            );
-        }
+      try {
+        return await this.userService.staffRegister(body, storeId);
+      } catch (error) {
+        throw new HttpException(
+          'Failed to register staff',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
     }
+  
     @Post('login')
-    @ApiOperation({ summary: 'Login a client' })
+    @ApiOperation({ summary: 'User login' })
     @ApiResponse({
-        status: 200,
-        description: 'User successfully logged in',
+      status: 200,
+      description: 'User successfully logged in',
     })
     @ApiResponse({
-        status: 400,
-        description: 'Invalid login credentials',
+      status: 400,
+      description: 'Invalid login credentials',
     })
     @ApiBody({
-        type: loginDTO,
-        description: 'Client login details',
+      type: loginDTO,
+      description: 'Login details',
     })
     async login(@Body() body: loginDTO) {
+      try {
         return await this.userService.login(body);
+      } catch (error) {
+        throw new HttpException(
+          'Login failed',
+          HttpStatus.UNAUTHORIZED,
+        );
+      }
     }
-    @Delete('client/deleteClient')
-    // @UseGuards(JwtGuard, RoleGuard)
-    // @Roles('admin')
-    @ApiOperation({summary: 'Delete a client'})
+  
+    @Delete('client/delete')
+    @UseGuards(RolesGuard, JwtGuard)
+    @Roles(Role.ADMIN, Role.CLIENT)
+    @ApiBearerAuth('JWT Auth')
+    @ApiOperation({ summary: 'Delete a client' })
     @ApiResponse({
-        status: 200,
-        description: 'Delete successfully',
+      status: 200,
+      description: 'Client successfully deleted',
     })
     @ApiResponse({
-        status: 400, 
-        description: 'Cannot delete'
+      status: 400,
+      description: 'Failed to delete client',
     })
-    async deleteClient(
-        @Query('c_id') id: string
-    ){
-        return this.userService.deleteClientbyID(id);
+    async deleteClient(@Query('c_id') clientId: string): Promise<any> {
+      try {
+        return await this.userService.deleteClientbyID(clientId);
+      } catch (error) {
+        throw new HttpException(
+          'Failed to delete client',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
     }
+  
     @Delete('staff/delete')
-    // @UseGuards(JwtGuard, RoleGuard)
-    // @Roles('admin')
-    @ApiOperation({summary: 'Delete a staff'})
+    @UseGuards(RolesGuard, JwtGuard)
+    @UseGuards(JwtGuard, RolesGuard)
+    @Roles(Role.ADMIN)
+    @ApiBearerAuth('JWT Auth')
+    @ApiOperation({ summary: 'Delete a staff member' })
     @ApiResponse({
-        status: 200,
-        description: 'Delete successfully',
+      status: 200,
+      description: 'Staff successfully deleted',
     })
     @ApiResponse({
-        status: 400, 
-        description: 'Cannot delete'
+      status: 400,
+      description: 'Failed to delete staff',
     })
-    async deleteStaff(
-        @Query('e_id') id: string
-    ){
-        return this.userService.deleteStaff(id);
+    async deleteStaff(@Query('e_id') employeeId: string) {
+      try {
+        return await this.userService.deleteStaff(employeeId);
+      } catch (error) {
+        throw new HttpException(
+          'Failed to delete staff',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
     }
-    @Put('update-client-by-id')
-    // @UseGuards(JwtGuard, RoleGuard)
-    // @Roles('admin')
+  
+    @Put('client/update')
+    @ApiBearerAuth('JWT Auth')
+    @UseGuards(RolesGuard, JwtGuard)
+    @Roles(Role.ADMIN, Role.EMPLOYEE)
     @ApiOperation({ summary: 'Update a client by ID' })
     @ApiResponse({
-        status: 200,
-        description: 'Client updated successfully',
+      status: 200,
+      description: 'Client updated successfully',
     })
-    async updateClient(@Query('c_id') id: string, @Body() body: ClientDto){
-        return await this.userService.updateClient(id, body);
-    }
-    @Put('update-staff-by-id')
-    // @UseGuards(JwtGuard, RoleGuard)
-    // @Roles('admin')
-    @ApiOperation({ summary: 'Update a staff by ID' })
     @ApiResponse({
-        status: 200,
-        description: 'Staff updated successfully',
-    })  
-    async updateStaff(@Query('e_id') id: string, @Body() body: EmployeeDto){
-        return await this.userService.updateStaff(id, body);
+      status: 400,
+      description: 'Failed to update client',
+    })
+    async updateClient(
+      @Query('c_id') clientId: string,
+      @Body() body: ClientDto,
+    ) {
+      try {
+        return await this.userService.updateClient(clientId, body);
+      } catch (error) {
+        throw new HttpException(
+          'Failed to update client',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
     }
-}
+  
+    @Put('staff/update')
+    @ApiBearerAuth('JWT Auth')
+    @UseGuards(RolesGuard, JwtGuard)
+    @Roles(Role.EMPLOYEE, Role.ADMIN)
+    @ApiOperation({ summary: 'Update a staff member by ID' })
+    @ApiResponse({
+      status: 200,
+      description: 'Staff updated successfully',
+    })
+    @ApiResponse({
+      status: 400,
+      description: 'Failed to update staff',
+    })
+    async updateStaff(
+      @Query('e_id') employeeId: string,
+      @Body() body: EmployeeDto,
+    ) {
+      try {
+        return await this.userService.updateStaff(employeeId, body);
+      } catch (error) {
+        throw new HttpException(
+          'Failed to update staff',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+    }
+    
+    @Get('client/getInfo')
+    @ApiBearerAuth('JWT Auth')
+    @UseGuards(JwtGuard, RolesGuard) 
+    @Roles(Role.CLIENT)
+    @ApiOperation({ summary: 'Get user information by ID' })
+    @ApiResponse({
+      status: 200,
+      description: 'Successfully',
+    })
+    @ApiResponse({
+      status: 400,
+      description: 'Failed',
+    })
+    async getClientbyID(@Query('c_id') customerID : string){
+        return this.userService.getClientbyID(customerID)
+    }
+    @Get('staff/getClientInfo')
+    @ApiBearerAuth('JWT Auth')
+    @UseGuards(JwtGuard, RolesGuard) 
+    @Roles(Role.EMPLOYEE, Role.ADMIN)
+    @ApiOperation({ summary: 'Get user information' })
+    @ApiResponse({
+      status: 200,
+      description: 'Successfully',
+    })
+    @ApiResponse({
+      status: 400,
+      description: 'Failed',
+    })
+    async getallClient(){
+        return this.userService.getAllClient();
+    }
+  }
+  

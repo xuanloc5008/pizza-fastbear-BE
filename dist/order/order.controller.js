@@ -18,6 +18,8 @@ const order_service_1 = require("./order.service");
 const order_dto_1 = require("./dtos/order.dto");
 const swagger_1 = require("@nestjs/swagger");
 const jwt_guards_1 = require("../user/guards/jwt.guards");
+const roles_decorator_1 = require("../user/decorators/roles.decorator");
+const role_guards_1 = require("../user/guards/role.guards");
 let OrderController = class OrderController {
     constructor(orderService) {
         this.orderService = orderService;
@@ -42,8 +44,6 @@ let OrderController = class OrderController {
 exports.OrderController = OrderController;
 __decorate([
     (0, common_1.Post)('place-order'),
-    (0, common_1.UseGuards)(jwt_guards_1.JwtGuard),
-    (0, swagger_1.ApiBearerAuth)('JWT Auth'),
     (0, swagger_1.ApiOperation)({ summary: 'Place a new order for a customer' }),
     (0, swagger_1.ApiResponse)({
         status: 201,
@@ -71,8 +71,6 @@ __decorate([
 ], OrderController.prototype, "placeOrder", null);
 __decorate([
     (0, common_1.Get)('get-order-by-id'),
-    (0, common_1.UseGuards)(jwt_guards_1.JwtGuard),
-    (0, swagger_1.ApiBearerAuth)('JWT Auth'),
     (0, swagger_1.ApiOperation)({ summary: 'Retrieve orders for a specific customer' }),
     (0, swagger_1.ApiResponse)({
         status: 200,
@@ -95,8 +93,6 @@ __decorate([
 ], OrderController.prototype, "getOrders", null);
 __decorate([
     (0, common_1.Get)('get-orders'),
-    (0, common_1.UseGuards)(jwt_guards_1.JwtGuard),
-    (0, swagger_1.ApiBearerAuth)('JWT Auth'),
     (0, swagger_1.ApiOperation)({ summary: 'Retrieve all orders in the system' }),
     (0, swagger_1.ApiResponse)({
         status: 200,
@@ -108,8 +104,6 @@ __decorate([
 ], OrderController.prototype, "getAllOrders", null);
 __decorate([
     (0, common_1.Delete)('delete-order-by-id'),
-    (0, common_1.UseGuards)(jwt_guards_1.JwtGuard),
-    (0, swagger_1.ApiBearerAuth)('JWT Auth'),
     (0, swagger_1.ApiOperation)({ summary: 'Delete an order by ID' }),
     (0, swagger_1.ApiResponse)({
         status: 200,
@@ -122,8 +116,6 @@ __decorate([
 ], OrderController.prototype, "deleteOrder", null);
 __decorate([
     (0, common_1.Put)('update-order-by-id'),
-    (0, common_1.UseGuards)(jwt_guards_1.JwtGuard),
-    (0, swagger_1.ApiBearerAuth)('JWT Auth'),
     (0, swagger_1.ApiOperation)({ summary: 'Update an order by ID' }),
     (0, swagger_1.ApiResponse)({
         status: 200,
@@ -138,6 +130,9 @@ __decorate([
 exports.OrderController = OrderController = __decorate([
     (0, common_1.Controller)('order'),
     (0, swagger_1.ApiTags)('Order'),
+    (0, common_1.UseGuards)(jwt_guards_1.JwtGuard, role_guards_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(roles_decorator_1.Role.CLIENT, roles_decorator_1.Role.EMPLOYEE, roles_decorator_1.Role.ADMIN),
+    (0, swagger_1.ApiBearerAuth)('JWT Auth'),
     __metadata("design:paramtypes", [order_service_1.OrderService])
 ], OrderController);
 //# sourceMappingURL=order.controller.js.map

@@ -12,6 +12,10 @@ export declare class UserService {
     }>;
     staffRegister(body: EmployeeDto, store_id: string): Promise<{
         message: string;
+        error?: undefined;
+    } | {
+        message: string;
+        error: any;
     }>;
     login(body: loginDTO): Promise<{
         message: string;
@@ -24,4 +28,6 @@ export declare class UserService {
     deleteStaff(id: string): Promise<any>;
     updateClient(id: string, body: ClientDto): Promise<unknown>;
     updateStaff(id: string, body: EmployeeDto): Promise<unknown>;
+    getClientbyID(id: string): Promise<unknown>;
+    getAllClient(): Promise<unknown>;
 }

@@ -18,4 +18,9 @@ export class loginDTO {
         required: true
     })
     password: string;
+    // @IsString()
+    // @IsNotEmpty()
+    // @ApiProperty({
+    //     description: 'role'
+    // })
 }

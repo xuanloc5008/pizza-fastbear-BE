@@ -53,9 +53,6 @@ export class DatabaseService implements OnApplicationShutdown {
         }
     }
 
-    /**
-     * Close the connection pool when the application shuts down.
-     */
     async onApplicationShutdown() {
         if (this.pool) {
             await this.pool.close();

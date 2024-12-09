@@ -14,6 +14,7 @@ const common_1 = require("@nestjs/common");
 const database_service_1 = require("../database/database.service");
 const bcrypt = require("bcrypt");
 const jwt_1 = require("@nestjs/jwt");
+const inspector_1 = require("inspector");
 let UserService = class UserService {
     constructor(dbService, jwtService) {
         this.dbService = dbService;
@@ -27,7 +28,14 @@ let UserService = class UserService {
             if (isValid) {
                 return { message: 'Username already exists.' };
             }
-            const result = await this.dbService.query('INSERT INTO Customer (id, phone_no, C_username, C_password, ward, city, name, district ) VALUES (NEWID(), @p1, @p2, @p3, @p4, @p5, @p6, @p7)', [
+            const result = await this.dbService.query(`EXEC AddCustomer 
+                    @C_username=@p2, 
+                    @C_password=@p3, 
+                    @name=@p6, 
+                    @ward=@p4, 
+                    @district=@p7, 
+                    @city=@p5, 
+                    @phone_no=@p1`, [
                 { name: 'p1', value: body.phone_number },
                 { name: 'p2', value: body.username },
                 { name: 'p3', value: hashedPassword },
@@ -36,22 +44,24 @@ let UserService = class UserService {
                 { name: 'p6', value: body.name },
                 { name: 'p7', value: body.district },
             ]);
-            console.log('Query Result:', result);
+            inspector_1.console.log('Query Result:', result);
             return { message: 'User registered successfully.' };
         }
         catch (error) {
-            console.error('Error registering user:', error);
+            inspector_1.console.error('Error registering user:', error);
             throw new Error('Registration failed.');
         }
     }
     async staffRegister(body, store_id) {
-        const check = await this.dbService.query('SELECT *  FROM Employee WHERE e_id = @p1', [{ name: 'p1', value: body.e_id }]);
-        try {
-            const isvalid = check.length > 0;
-            return { message: 'Employee has been existed' };
+        const hashedPassword = await bcrypt.hash(body.password, 10);
+        const check = await this.dbService.query('SELECT * FROM Employee WHERE e_id = @p1', [{ name: 'p1', value: body.e_id }]);
+        inspector_1.console.log(check);
+        if (check.length > 0) {
+            return { message: 'Employee has already been registered.' };
         }
-        catch (error) {
-            await this.dbService.query('INSERT INTO Employee (e_id, last_name, first_name, ward, district, city, phone_no, store_id) VALUE (@p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8)', [
+        try {
+            await this.dbService.query(`INSERT INTO Employee (e_id, last_name, first_name, ward, district, city, phone_no, yob, username, password)
+                 VALUES (@p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10)`, [
                 { name: 'p1', value: body.e_id },
                 { name: 'p2', value: body.last_name },
                 { name: 'p3', value: body.first_name },
@@ -59,24 +69,33 @@ let UserService = class UserService {
                 { name: 'p5', value: body.district },
                 { name: 'p6', value: body.city },
                 { name: 'p7', value: body.phone_no },
-                { name: 'p8', value: store_id }
+                { name: 'p8', value: body.yob },
+                { name: 'p9', value: body.username },
+                { name: 'p10', value: hashedPassword }
             ]);
-            return { message: 'Sucessfully created' };
+            return { message: 'Successfully created.' };
+        }
+        catch (error) {
+            inspector_1.console.error('Error creating employee:', error);
+            return { message: 'Error occurred while creating the employee.', error: error.message };
         }
     }
     async login(body) {
-        const user = await this.dbService.query('SELECT * FROM Customer WHERE C_username = @p1', [{ name: 'p1', value: body.username }]);
+        const user = await this.dbService.query('SELECT * FROM UserInfo WHERE username = @p1', [{ name: 'p1', value: body.username }]);
         if (user.length === 0) {
             return { message: 'User not found.' };
         }
-        const isMatch = await bcrypt.compare(body.password, user[0].C_password);
+        if (!user[0].password) {
+            return { message: 'Invalid user data: Password not found.' };
+        }
+        const isMatch = await bcrypt.compare(body.password, user[0].password);
         if (!isMatch) {
             return { message: 'Invalid credentials.' };
         }
         const payload = {
-            username: user[0].C_username,
+            username: user[0].username,
             sub: user[0].id,
-            password: user[0].C_password,
+            role: user[0].role,
         };
         const token = await this.jwtService.signAsync(payload);
         return {
@@ -95,6 +114,14 @@ let UserService = class UserService {
     }
     async updateStaff(id, body) {
         return await this.dbService.query('UPDATE Employee SET (last_name, first_name, ward, district, city, phone_no, store_id) WHERE e_id = @p1', [{ name: 'p1', value: id }, { name: 'p2', value: body.last_name }, { name: 'p3', value: body.first_name }, { name: 'p4', value: body.ward }, { name: 'p5', value: body.district }, { name: 'p6', value: body.city }, { name: 'p7', value: body.phone_no }, { name: 'p8', value: body.store_id }]);
+    }
+    async getClientbyID(id) {
+        const result = await this.dbService.query('EXEC getCustomer @id = @p1', [{ name: 'p1', value: id }]);
+        return result;
+    }
+    async getAllClient() {
+        const result = await this.dbService.query('EXEC getAllCustomer');
+        return result;
     }
 };
 exports.UserService = UserService;

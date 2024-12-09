@@ -5,12 +5,17 @@ import { EmployeeDto } from './dtos/staff.dto';
 import { loginDTO } from './dtos/login.dto';
 export declare class UserController {
     private readonly userService;
+    private readonly database;
     constructor(userService: UserService, database: DatabaseService);
-    register(body: ClientDto): Promise<{
+    registerClient(body: ClientDto): Promise<{
         message: string;
     }>;
-    registerStaff(body: EmployeeDto, id: string): Promise<{
+    registerStaff(body: EmployeeDto, storeId: string): Promise<{
         message: string;
+        error?: undefined;
+    } | {
+        message: string;
+        error: any;
     }>;
     login(body: loginDTO): Promise<{
         message: string;
@@ -19,8 +24,10 @@ export declare class UserController {
         message: string;
         access_token: string;
     }>;
-    deleteClient(id: string): Promise<any>;
-    deleteStaff(id: string): Promise<any>;
-    updateClient(id: string, body: ClientDto): Promise<unknown>;
-    updateStaff(id: string, body: EmployeeDto): Promise<unknown>;
+    deleteClient(clientId: string): Promise<any>;
+    deleteStaff(employeeId: string): Promise<any>;
+    updateClient(clientId: string, body: ClientDto): Promise<unknown>;
+    updateStaff(employeeId: string, body: EmployeeDto): Promise<unknown>;
+    getClientbyID(customerID: string): Promise<unknown>;
+    getallClient(): Promise<unknown>;
 }
