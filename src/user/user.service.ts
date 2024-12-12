@@ -7,14 +7,12 @@ import { JwtService } from '@nestjs/jwt';
 import { EmployeeDto } from './dtos/staff.dto';
 import { loginDTO } from './dtos/login.dto';
 import { console } from 'inspector';
-
 @Injectable()
 export class UserService {
     constructor(
         private readonly dbService: DatabaseService,
         private readonly jwtService: JwtService
     ) {}
-
     async register(body: ClientDto) {
         const hashedPassword = await bcrypt.hash(body.password, 10);
         try {
@@ -49,7 +47,6 @@ export class UserService {
             
     
             console.log('Query Result:', result);
-
     
             return { message: 'User registered successfully.' };
         } catch (error) {
@@ -110,17 +107,20 @@ export class UserService {
         if (!isMatch) {
             return { message: 'Invalid credentials.' };
         }
+        let role = user[0].role;
+        role = role.trim()
         const payload = { 
             username: user[0].username,
             sub: user[0].id, 
-            role: user[0].role,
+            role: role,
         };
         
         const token = await this.jwtService.signAsync(payload);
-        
+
         return {
             message: 'Login successful.',
-            access_token: token
+            access_token: token,
+            role: role
         };
     }
     async deleteClientbyID(id : string){
