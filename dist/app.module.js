@@ -15,6 +15,7 @@ const database_service_1 = require("./database/database.service");
 const jwt_1 = require("@nestjs/jwt");
 const order_module_1 = require("./order/order.module");
 const menu_module_1 = require("./menu/menu.module");
+const product_module_1 = require("./product/product.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -24,7 +25,7 @@ exports.AppModule = AppModule = __decorate([
                 global: true,
                 secret: 'duongthanhtuss',
                 signOptions: { expiresIn: '1h' },
-            }), order_module_1.OrderModule, menu_module_1.MenuModule],
+            }), order_module_1.OrderModule, menu_module_1.MenuModule, product_module_1.ProductModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, database_service_1.DatabaseService],
         exports: [database_service_1.DatabaseService]
