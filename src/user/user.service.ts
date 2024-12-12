@@ -7,14 +7,13 @@ import { JwtService } from '@nestjs/jwt';
 import { EmployeeDto } from './dtos/staff.dto';
 import { loginDTO } from './dtos/login.dto';
 import { console } from 'inspector';
-
+import { evaluating } from './dtos/evaluating.dto';
 @Injectable()
 export class UserService {
     constructor(
         private readonly dbService: DatabaseService,
         private readonly jwtService: JwtService
     ) {}
-
     async register(body: ClientDto) {
         const hashedPassword = await bcrypt.hash(body.password, 10);
         try {
@@ -49,7 +48,6 @@ export class UserService {
             
     
             console.log('Query Result:', result);
-
     
             return { message: 'User registered successfully.' };
         } catch (error) {
@@ -110,17 +108,20 @@ export class UserService {
         if (!isMatch) {
             return { message: 'Invalid credentials.' };
         }
+        let role = user[0].role;
+        role = role.trim()
         const payload = { 
             username: user[0].username,
             sub: user[0].id, 
-            role: user[0].role,
+            role: role,
         };
         
         const token = await this.jwtService.signAsync(payload);
-        
+
         return {
             message: 'Login successful.',
-            access_token: token
+            access_token: token,
+            role: role
         };
     }
     async deleteClientbyID(id : string){
@@ -153,6 +154,30 @@ export class UserService {
         const result = await this.dbService.query(
             'EXEC getAllCustomer'
         );
+        return result;
+    }
+    async getAllEmployee(store_id : string) {
+        const result = await this.dbService.query(
+            'EXEC getAllEmployee @store_id = @p1',
+            [{name: 'p1', value: store_id}]
+        )
+        return result;
+    }
+    async getAdmin(store_id: string) {
+        const result = await this.dbService.query(
+            'EXEC findAdminEmployeesInStore @store_id = @p1',
+            [{name: 'p1', value: store_id}]
+        )
+        return result
+    }
+    async evaluating(e_id: string, body: evaluating){
+        const result = await this.dbService.query(
+            'EXEC EvalEmployee @e_id = @p1, @score = @p2, @feedbacks = @p3',
+            [{name: 'p1', value: e_id},
+                {name: 'p2', value: body.score},
+                {name: 'p3', value: body.feedbacks}
+            ]
+        )
         return result;
     }
 }

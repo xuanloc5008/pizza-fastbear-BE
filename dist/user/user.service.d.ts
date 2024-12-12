@@ -3,6 +3,7 @@ import { DatabaseService } from '../database/database.service';
 import { JwtService } from '@nestjs/jwt';
 import { EmployeeDto } from './dtos/staff.dto';
 import { loginDTO } from './dtos/login.dto';
+import { evaluating } from './dtos/evaluating.dto';
 export declare class UserService {
     private readonly dbService;
     private readonly jwtService;
@@ -20,9 +21,11 @@ export declare class UserService {
     login(body: loginDTO): Promise<{
         message: string;
         access_token?: undefined;
+        role?: undefined;
     } | {
         message: string;
         access_token: string;
+        role: any;
     }>;
     deleteClientbyID(id: string): Promise<any>;
     deleteStaff(id: string): Promise<any>;
@@ -30,4 +33,7 @@ export declare class UserService {
     updateStaff(id: string, body: EmployeeDto): Promise<unknown>;
     getClientbyID(id: string): Promise<unknown>;
     getAllClient(): Promise<unknown>;
+    getAllEmployee(store_id: string): Promise<unknown>;
+    getAdmin(store_id: string): Promise<unknown>;
+    evaluating(e_id: string, body: evaluating): Promise<unknown>;
 }

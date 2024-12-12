@@ -3,6 +3,7 @@ import { ClientDto } from './dtos/client.dto';
 import { DatabaseService } from 'src/database/database.service';
 import { EmployeeDto } from './dtos/staff.dto';
 import { loginDTO } from './dtos/login.dto';
+import { evaluating } from './dtos/evaluating.dto';
 export declare class UserController {
     private readonly userService;
     private readonly database;
@@ -20,9 +21,11 @@ export declare class UserController {
     login(body: loginDTO): Promise<{
         message: string;
         access_token?: undefined;
+        role?: undefined;
     } | {
         message: string;
         access_token: string;
+        role: any;
     }>;
     deleteClient(clientId: string): Promise<any>;
     deleteStaff(employeeId: string): Promise<any>;
@@ -30,4 +33,7 @@ export declare class UserController {
     updateStaff(employeeId: string, body: EmployeeDto): Promise<unknown>;
     getClientbyID(customerID: string): Promise<unknown>;
     getallClient(): Promise<unknown>;
+    getAllStaff(store_id: string): Promise<unknown>;
+    getAdmin(store_id: string): Promise<unknown>;
+    evaluate(e_id: string, body: evaluating): Promise<unknown>;
 }

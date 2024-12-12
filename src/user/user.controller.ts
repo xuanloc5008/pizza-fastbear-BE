@@ -19,6 +19,7 @@ import {
   import { JwtGuard } from './guards/jwt.guards';
   import { Roles, Role } from './decorators/roles.decorator';
   import { RolesGuard } from './guards/role.guards';
+import { evaluating } from './dtos/evaluating.dto';
   @Controller('user')
   @ApiTags('User')
   export class UserController {
@@ -56,9 +57,9 @@ import {
     }
   
     @Post('staff/register')
-    @ApiBearerAuth('JWT Auth')
-    @UseGuards(JwtGuard, RolesGuard) 
-    @Roles(Role.ADMIN)
+    // @ApiBearerAuth('JWT Auth')
+    // @UseGuards(JwtGuard, RolesGuard) 
+    // @Roles(Role.ADMIN)
     @ApiOperation({ summary: 'Register a new staff member' })
     @ApiResponse({
       status: 201,
@@ -245,6 +246,47 @@ import {
     })
     async getallClient(){
         return this.userService.getAllClient();
+    }
+
+    @Get('staff/getInfo')
+    @ApiOperation({ summary: 'Get all staffs' })
+    @ApiResponse({
+      status: 200,
+      description: 'Successfully',
+    })
+    @ApiResponse({
+      status: 400,
+      description: 'Failed',
+    })
+    async getAllStaff(@Query('store_id') store_id : string){
+        return this.userService.getAllEmployee(store_id);
+    }
+    @Get('staff/admin')
+    @ApiOperation({ summary: 'Get admin' })
+    @ApiResponse({
+      status: 200,
+      description: 'Successfully',
+    })
+    @ApiResponse({
+      status: 400,
+      description: 'Failed',
+    })
+    async getAdmin(@Query('store_id') store_id : string){
+        return this.userService.getAdmin(store_id);
+    }
+
+    @Post('staff/evaluate')
+    @ApiOperation({ summary: 'Evaluating'})
+    @ApiResponse({
+      status: 200,
+      description: 'Seccessfully',
+    })
+    @ApiResponse({
+      status: 400,
+      description: 'Failed',
+    })
+    async evaluate(@Query('e_id') e_id : string, @Body() body: evaluating){
+      return this.userService.evaluating(e_id, body);
     }
   }
   
