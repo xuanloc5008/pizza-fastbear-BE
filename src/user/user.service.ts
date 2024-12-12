@@ -7,6 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import { EmployeeDto } from './dtos/staff.dto';
 import { loginDTO } from './dtos/login.dto';
 import { console } from 'inspector';
+import { evaluating } from './dtos/evaluating.dto';
 @Injectable()
 export class UserService {
     constructor(
@@ -168,5 +169,15 @@ export class UserService {
             [{name: 'p1', value: store_id}]
         )
         return result
+    }
+    async evaluating(e_id: string, body: evaluating){
+        const result = await this.dbService.query(
+            'EXEC EvalEmployee @e_id = @p1, @score = @p2, @feedbacks = @p3',
+            [{name: 'p1', value: e_id},
+                {name: 'p2', value: body.score},
+                {name: 'p3', value: body.feedbacks}
+            ]
+        )
+        return result;
     }
 }
