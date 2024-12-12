@@ -19,6 +19,7 @@ import {
   import { JwtGuard } from './guards/jwt.guards';
   import { Roles, Role } from './decorators/roles.decorator';
   import { RolesGuard } from './guards/role.guards';
+import { evaluating } from './dtos/evaluating.dto';
   @Controller('user')
   @ApiTags('User')
   export class UserController {
@@ -272,6 +273,20 @@ import {
     })
     async getAdmin(@Query('store_id') store_id : string){
         return this.userService.getAdmin(store_id);
+    }
+
+    @Post('staff/evaluate')
+    @ApiOperation({ summary: 'Evaluating'})
+    @ApiResponse({
+      status: 200,
+      description: 'Seccessfully',
+    })
+    @ApiResponse({
+      status: 400,
+      description: 'Failed',
+    })
+    async evaluate(@Query('e_id') e_id : string, @Body() body: evaluating){
+      return this.userService.evaluating(e_id, body);
     }
   }
   
