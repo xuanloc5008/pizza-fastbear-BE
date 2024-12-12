@@ -11,32 +11,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderDto = void 0;
 const class_validator_1 = require("class-validator");
-const class_transformer_1 = require("class-transformer");
 const swagger_1 = require("@nestjs/swagger");
 class OrderDto {
 }
 exports.OrderDto = OrderDto;
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.IsDecimal)({ decimal_digits: '2' }),
-    (0, class_transformer_1.Type)(() => Number),
-    (0, class_validator_1.Min)(0),
-    (0, class_validator_1.Max)(99999999.99),
-    (0, swagger_1.ApiProperty)({
-        description: 'Price',
-        example: 10000,
-        required: true
-    }),
-    __metadata("design:type", Number)
-], OrderDto.prototype, "price", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)(),
     (0, swagger_1.ApiProperty)({
-        description: 'Components',
-        example: "Ratatoullie",
+        description: 'Store ID',
+        example: "123e4567-e89b-12d3-a456-426614174000",
         required: true
     }),
     __metadata("design:type", String)
-], OrderDto.prototype, "components", void 0);
+], OrderDto.prototype, "store_id", void 0);
 //# sourceMappingURL=order.dto.js.map

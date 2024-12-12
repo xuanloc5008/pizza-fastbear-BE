@@ -20,6 +20,7 @@ const swagger_1 = require("@nestjs/swagger");
 const jwt_guards_1 = require("../user/guards/jwt.guards");
 const roles_decorator_1 = require("../user/decorators/roles.decorator");
 const role_guards_1 = require("../user/guards/role.guards");
+const updateorder_dto_1 = require("./dtos/updateorder.dto");
 let OrderController = class OrderController {
     constructor(orderService) {
         this.orderService = orderService;
@@ -124,7 +125,7 @@ __decorate([
     __param(0, (0, common_1.Query)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, order_dto_1.OrderDto]),
+    __metadata("design:paramtypes", [String, updateorder_dto_1.UpdateOrderDto]),
     __metadata("design:returntype", Promise)
 ], OrderController.prototype, "updateOrder", null);
 exports.OrderController = OrderController = __decorate([

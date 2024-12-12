@@ -5,6 +5,7 @@ import { ApiOperation, ApiResponse, ApiTags, ApiQuery, ApiBody, ApiBearerAuth } 
 import { JwtGuard } from '../user/guards/jwt.guards';
 import { Role, Roles } from 'src/user/decorators/roles.decorator';
 import { RolesGuard } from 'src/user/guards/role.guards';
+import { UpdateOrderDto } from './dtos/updateorder.dto';
 @Controller('order')
 @ApiTags('Order')
 @UseGuards(JwtGuard, RolesGuard)
@@ -86,7 +87,7 @@ export class OrderController {
         status: 200,
         description: 'Orders updated successfully',
     })
-    async updateOrder(@Query('id') id: string, @Body() body: OrderDto) {
+    async updateOrder(@Query('id') id: string, @Body() body: UpdateOrderDto) {
         return await this.orderService.updateOrder(id, body);
     }
 

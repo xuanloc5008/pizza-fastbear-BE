@@ -4,23 +4,11 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class OrderDto {
     @IsNotEmpty()
-    @IsDecimal({ decimal_digits: '2' })
-    @Type(() => Number)
-    @Min(0)
-    @Max(99999999.99)
-    @ApiProperty({
-        description: 'Price',
-        example: 10000,
-        required: true
-    })
-    price: number;
-
-    @IsOptional()
     @IsString()
     @ApiProperty({
-        description: 'Components',
-        example: "Ratatoullie",
+        description: 'Store ID',
+        example: "123e4567-e89b-12d3-a456-426614174000",
         required: true
     })
-    components?: string;
+    store_id: string;
 }
