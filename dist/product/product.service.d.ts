@@ -17,4 +17,6 @@ export declare class ProductService {
     updateProductInfo(product: ProductDto, id: string): Promise<{
         message: string;
     }>;
+    getAllproduct(): Promise<unknown>;
+    getProductById(id: string): Promise<unknown>;
 }

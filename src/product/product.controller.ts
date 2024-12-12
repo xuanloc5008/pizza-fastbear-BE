@@ -1,4 +1,4 @@
-import { Controller, Post, Put, Body, Query, Delete, RequestMapping } from '@nestjs/common';
+import { Controller, Post, Put, Body, Query, Delete, RequestMapping, Get } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductDto } from './dtos/product.dto';
 import { ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';  
@@ -41,5 +41,17 @@ export class ProductController {
     @ApiResponse({ status: 201, description: 'Product updated successfully' })
     async updateProduct(@Body() product: ProductDto, @Query('id') id: string) {
         return this.productService.updateProductInfo(product, id);
+    }
+    @Get('get-all-product')
+    @ApiOperation({ summary: 'Get all product' })
+    @ApiResponse({ status: 201, description: 'Product fetched successfully' })
+    async getAllProduct() {
+        return this.productService.getAllproduct();
+    }
+    @Get('get-product-by-id')
+    @ApiOperation({ summary: 'Get a product by id' })
+    @ApiResponse({ status: 201, description: 'Product fetched successfully' })
+    async getProductById(@Query('id') id: string) {
+        return this.productService.getProductById(id);
     }
 }

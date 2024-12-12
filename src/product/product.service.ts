@@ -109,4 +109,19 @@ export class ProductService {
             throw new Error('Failed to execute udpateProductInfo procedure.');
         }
     }
+    async getAllproduct() {
+        const query = `
+            EXEC getAllproduct;
+        `;
+        return await this.dbService.query(query);
+    }
+    async getProductById(id: string) {
+        const query = `
+            EXEC getProductbyID @product_id = @p1;
+        `;
+        const parameters = [
+            { name: 'p1', value: id },
+        ];
+        return await this.dbService.query(query, parameters);
+    }
 }

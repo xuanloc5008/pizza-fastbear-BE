@@ -18,4 +18,6 @@ export declare class ProductController {
     updateProduct(product: ProductDto, id: string): Promise<{
         message: string;
     }>;
+    getAllProduct(): Promise<unknown>;
+    getProductById(id: string): Promise<unknown>;
 }

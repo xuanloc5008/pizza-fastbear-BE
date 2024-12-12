@@ -38,6 +38,12 @@ let ProductController = class ProductController {
     async updateProduct(product, id) {
         return this.productService.updateProductInfo(product, id);
     }
+    async getAllProduct() {
+        return this.productService.getAllproduct();
+    }
+    async getProductById(id) {
+        return this.productService.getProductById(id);
+    }
 };
 exports.ProductController = ProductController;
 __decorate([
@@ -92,6 +98,23 @@ __decorate([
     __metadata("design:paramtypes", [product_dto_1.ProductDto, String]),
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "updateProduct", null);
+__decorate([
+    (0, common_1.Get)('get-all-product'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get all product' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Product fetched successfully' }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "getAllProduct", null);
+__decorate([
+    (0, common_1.Get)('get-product-by-id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get a product by id' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Product fetched successfully' }),
+    __param(0, (0, common_1.Query)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "getProductById", null);
 exports.ProductController = ProductController = __decorate([
     (0, common_1.Controller)('product'),
     __metadata("design:paramtypes", [product_service_1.ProductService])
