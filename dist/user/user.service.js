@@ -127,7 +127,7 @@ let UserService = class UserService {
         return result;
     }
     async getAllEmployee(store_id) {
-        const result = await this.dbService.query('EXEC getAllEmployee @store_id = @p1', [{ name: 'p1', value: store_id }]);
+        const result = await this.dbService.query('SELECT * FROM getAllEmployee(@p1)', [{ name: 'p1', value: store_id }]);
         return result;
     }
     async getAdmin(store_id) {
