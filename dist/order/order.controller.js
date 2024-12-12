@@ -17,9 +17,6 @@ const common_1 = require("@nestjs/common");
 const order_service_1 = require("./order.service");
 const order_dto_1 = require("./dtos/order.dto");
 const swagger_1 = require("@nestjs/swagger");
-const jwt_guards_1 = require("../user/guards/jwt.guards");
-const roles_decorator_1 = require("../user/decorators/roles.decorator");
-const role_guards_1 = require("../user/guards/role.guards");
 const updateorder_dto_1 = require("./dtos/updateorder.dto");
 let OrderController = class OrderController {
     constructor(orderService) {
@@ -29,11 +26,11 @@ let OrderController = class OrderController {
         console.log(c_id);
         return await this.orderService.placeOrder(body, c_id);
     }
-    async getOrders(c_id) {
-        return await this.orderService.getOrders(c_id);
+    async getOrders(e_id, order_id) {
+        return await this.orderService.getOrders(e_id, order_id);
     }
-    async getAllOrders() {
-        return await this.orderService.getAllOrders();
+    async getAllOrders(e_id) {
+        return await this.orderService.getAllOrders(e_id);
     }
     async deleteOrder(id) {
         return await this.orderService.deleteOrder(id);
@@ -72,24 +69,15 @@ __decorate([
 ], OrderController.prototype, "placeOrder", null);
 __decorate([
     (0, common_1.Get)('get-order-by-id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Retrieve orders for a specific customer' }),
+    (0, swagger_1.ApiOperation)({ summary: 'Retrieve orders for a specific salesman' }),
     (0, swagger_1.ApiResponse)({
         status: 200,
         description: 'Orders retrieved successfully',
     }),
-    (0, swagger_1.ApiResponse)({
-        status: 404,
-        description: 'Customer not found',
-    }),
-    (0, swagger_1.ApiQuery)({
-        name: 'c_id',
-        description: 'Customer ID to fetch orders for',
-        required: true,
-        example: '123e4567-e89b-12d3-a456-426614174000',
-    }),
-    __param(0, (0, common_1.Query)('c_id')),
+    __param(0, (0, common_1.Query)('e_id')),
+    __param(1, (0, common_1.Query)('order_id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], OrderController.prototype, "getOrders", null);
 __decorate([
@@ -99,8 +87,9 @@ __decorate([
         status: 200,
         description: 'Orders retrieved successfully',
     }),
+    __param(0, (0, common_1.Query)('e_id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], OrderController.prototype, "getAllOrders", null);
 __decorate([
@@ -131,9 +120,6 @@ __decorate([
 exports.OrderController = OrderController = __decorate([
     (0, common_1.Controller)('order'),
     (0, swagger_1.ApiTags)('Order'),
-    (0, common_1.UseGuards)(jwt_guards_1.JwtGuard, role_guards_1.RolesGuard),
-    (0, roles_decorator_1.Roles)(roles_decorator_1.Role.CLIENT, roles_decorator_1.Role.EMPLOYEE, roles_decorator_1.Role.ADMIN),
-    (0, swagger_1.ApiBearerAuth)('JWT Auth'),
     __metadata("design:paramtypes", [order_service_1.OrderService])
 ], OrderController);
 //# sourceMappingURL=order.controller.js.map

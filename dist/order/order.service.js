@@ -28,19 +28,17 @@ let OrderService = class OrderService {
             return { message: 'Failed to place order.' };
         }
     }
-    async getOrders(c_id) {
+    async getOrders(e_id, order_id) {
         try {
-            await this.dbService.query(`EXEC GetOrders @order_id = @p1`, [{ name: 'p1', value: c_id }]);
-            return { message: 'Orders fetched successfully.' };
+            return await this.dbService.query(`EXEC GetOrders @e_id = @p1, @order_id = @p2`, [{ name: 'p1', value: e_id }, { name: 'p2', value: order_id }]);
         }
         catch (error) {
             return { message: 'Failed to get orders.' };
         }
     }
-    async getAllOrders() {
+    async getAllOrders(e_id) {
         try {
-            await this.dbService.query(`EXEC GetAllOrders`);
-            return { message: 'Orders fetched successfully.' };
+            return await this.dbService.query(`EXEC GetAllOrders @e_id = @p1`, [{ name: 'p1', value: e_id }]);
         }
         catch (error) {
             return { message: 'Failed to get orders.' };

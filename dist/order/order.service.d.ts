@@ -7,12 +7,8 @@ export declare class OrderService {
     placeOrder(body: OrderDto, c_id: string): Promise<{
         message: string;
     }>;
-    getOrders(c_id: string): Promise<{
-        message: string;
-    }>;
-    getAllOrders(): Promise<{
-        message: string;
-    }>;
+    getOrders(e_id: string, order_id: string): Promise<unknown>;
+    getAllOrders(e_id: string): Promise<unknown>;
     deleteOrder(id: string): Promise<{
         message: string;
     }>;

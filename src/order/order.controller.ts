@@ -8,9 +8,9 @@ import { RolesGuard } from 'src/user/guards/role.guards';
 import { UpdateOrderDto } from './dtos/updateorder.dto';
 @Controller('order')
 @ApiTags('Order')
-@UseGuards(JwtGuard, RolesGuard)
-@Roles(Role.CLIENT, Role.EMPLOYEE, Role.ADMIN)
-@ApiBearerAuth('JWT Auth')
+// @UseGuards(JwtGuard, RolesGuard)
+// @Roles(Role.CLIENT, Role.EMPLOYEE, Role.ADMIN)
+// @ApiBearerAuth('JWT Auth')
 export class OrderController {
     constructor(private readonly orderService: OrderService) {}
 
@@ -43,23 +43,13 @@ export class OrderController {
     }
 
     @Get('get-order-by-id')
-    @ApiOperation({ summary: 'Retrieve orders for a specific customer' })
+    @ApiOperation({ summary: 'Retrieve orders for a specific salesman' })
     @ApiResponse({
         status: 200,
         description: 'Orders retrieved successfully',
     })
-    @ApiResponse({
-        status: 404,
-        description: 'Customer not found',
-    })
-    @ApiQuery({
-        name: 'c_id',
-        description: 'Customer ID to fetch orders for',
-        required: true,
-        example: '123e4567-e89b-12d3-a456-426614174000',
-    })
-    async getOrders(@Query('c_id') c_id: string) {
-        return await this.orderService.getOrders(c_id);
+    async getOrders(@Query('e_id') e_id: string, @Query('order_id') order_id: string) {
+        return await this.orderService.getOrders(e_id, order_id);
     }
 
     @Get('get-orders')
@@ -68,8 +58,8 @@ export class OrderController {
         status: 200,
         description: 'Orders retrieved successfully',
     })
-    async getAllOrders() {
-        return await this.orderService.getAllOrders();
+    async getAllOrders(@Query('e_id') e_id: string) {
+        return await this.orderService.getAllOrders(e_id);
     }
 
     @Delete('delete-order-by-id')
