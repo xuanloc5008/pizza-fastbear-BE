@@ -56,9 +56,9 @@ import {
     }
   
     @Post('staff/register')
-    @ApiBearerAuth('JWT Auth')
-    @UseGuards(JwtGuard, RolesGuard) 
-    @Roles(Role.ADMIN)
+    // @ApiBearerAuth('JWT Auth')
+    // @UseGuards(JwtGuard, RolesGuard) 
+    // @Roles(Role.ADMIN)
     @ApiOperation({ summary: 'Register a new staff member' })
     @ApiResponse({
       status: 201,
@@ -245,6 +245,33 @@ import {
     })
     async getallClient(){
         return this.userService.getAllClient();
+    }
+
+    @Get('staff/getInfo')
+    @ApiOperation({ summary: 'Get all staffs' })
+    @ApiResponse({
+      status: 200,
+      description: 'Successfully',
+    })
+    @ApiResponse({
+      status: 400,
+      description: 'Failed',
+    })
+    async getAllStaff(@Query('store_id') store_id : string){
+        return this.userService.getAllEmployee(store_id);
+    }
+    @Get('staff/admin')
+    @ApiOperation({ summary: 'Get admin' })
+    @ApiResponse({
+      status: 200,
+      description: 'Successfully',
+    })
+    @ApiResponse({
+      status: 400,
+      description: 'Failed',
+    })
+    async getAdmin(@Query('store_id') store_id : string){
+        return this.userService.getAdmin(store_id);
     }
   }
   
