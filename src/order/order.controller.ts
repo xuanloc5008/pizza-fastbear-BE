@@ -126,8 +126,8 @@ export class OrderController {
         description: 'Dish ordered successfully',
     })
     @ApiQuery({
-        name: 'order_id',
-        description: 'Order ID',
+        name: 'store_id',
+        description: 'store ID',
         required: true,
         example: '123e4567-e89b-12d3-a456-426614174000',
     })
@@ -137,7 +137,7 @@ export class OrderController {
         required: true,
         example: '123e4567-e89b-12d3-a456-426614174000',
     })  
-    async order(@Query('order_id') order_id: string, @Query('customer_id') customer_id: string, @Body() body: AddDishesToOrderDto) {
+    async order(@Query('store_id') order_id: string, @Query('customer_id') customer_id: string, @Body() body: AddDishesToOrderDto) {
         return await this.orderService.order(order_id, customer_id, body);
     }
 }
