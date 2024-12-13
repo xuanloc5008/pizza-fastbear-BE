@@ -22,11 +22,13 @@ export declare class UserService {
         message: string;
         access_token: string;
         role: any;
+        id: any;
     }>;
     loginStaff(body: loginDTO): Promise<{
         message: string;
         access_token: string;
         role: any;
+        id: any;
     }>;
     deleteClientbyID(id: string): Promise<any>;
     deleteStaff(id: string): Promise<any>;

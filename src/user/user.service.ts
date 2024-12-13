@@ -15,10 +15,10 @@ export class UserService {
         private readonly jwtService: JwtService
     ) {}
     async register(body: ClientDto) {
-        const hashedPassword = await bcrypt.hash(body.password, 10);
+        // const hashedPassword = await bcrypt.hash(body.password, 10);
         try {
             const valid = await this.dbService.query<any>(
-                'SELECT * FROM Customer WHERE C_username = @p1', 
+                'SELECT * FROM Customer WHERE username = @p1', 
                 [{ name: 'p1', value: body.username }]
             );
             
@@ -38,7 +38,7 @@ export class UserService {
                 [
                     { name: 'p1', value: body.phone_number },
                     { name: 'p2', value: body.username },
-                    { name: 'p3', value: hashedPassword },
+                    { name: 'p3', value: body.password },
                     { name: 'p4', value: body.ward },
                     { name: 'p5', value: body.city },
                     { name: 'p6', value: body.name },
@@ -57,13 +57,11 @@ export class UserService {
     }
     async staffRegister(body: EmployeeDto, store_id: string) {
         const hashedPassword = await bcrypt.hash(body.password, 10);
-        
+    
         const check = await this.dbService.query<any>(
-            'SELECT * FROM Employee WHERE e_id = @p1',
+            'SELECT * FROM Employee WHERE username = @p1',
             [{ name: 'p1', value: body.e_id }]
         );
-        
-        console.log(check);
     
         if (check.length > 0) {
             return { message: 'Employee has already been registered.' };
@@ -116,7 +114,8 @@ export class UserService {
         //     return { message: 'Invalid credentials.' };
         // }
         let role = user[0].role;
-        role = role.trim()
+        role = role.trim();
+        let id = user[0].id;
         const payload = { 
             id: user[0].id, 
             role: role,
@@ -127,7 +126,8 @@ export class UserService {
         return {
             message: 'Login successful.',
             access_token: token,
-            role: role
+            role: role,
+            id: id
         };
     }
     async loginStaff(body: loginDTO) {
@@ -137,6 +137,7 @@ export class UserService {
         );
         let role = user[0].role;
         role = role.trim()
+        let id = user[0].id;
         const payload = { 
             id: user[0].id, 
             role: role,
@@ -147,7 +148,8 @@ export class UserService {
         return {
             message: 'Login successful.',
             access_token: token,
-            role: role
+            role: role,
+            id: id
         };
     }
     async deleteClientbyID(id : string){
@@ -166,7 +168,7 @@ export class UserService {
         return await this.dbService.query('UPDATE Customer SET (phone_no, C_username, C_password, ward, city, name, district) WHERE id = @p1', [{name: 'p1', value: id}, {name: 'p2', value: body.phone_number}, {name: 'p3', value: body.username}, {name: 'p4', value: body.ward}, {name: 'p5', value: body.city}, {name: 'p6', value: body.name}, {name: 'p7', value: body.district}]);
     }
     async updateStaff(id: string, body: EmployeeDto){
-        return await this.dbService.query('UPDATE Employee SET (last_name, first_name, ward, district, city, phone_no, store_id) WHERE e_id = @p1', [{name: 'p1', value: id}, {name: 'p2', value: body.last_name}, {name: 'p3', value: body.first_name}, {name: 'p4', value: body.ward}, {name: 'p5', value: body.district}, {name: 'p6', value: body.city}, {name: 'p7', value: body.phone_no}, {name: 'p8', value: body.store_id}]);
+        return await this.dbService.query('UPDATE Employee SET (last_name, first_name, ward, district, city, phone_no) WHERE e_id = @p1', [{name: 'p1', value: id}, {name: 'p2', value: body.last_name}, {name: 'p3', value: body.first_name}, {name: 'p4', value: body.ward}, {name: 'p5', value: body.district}, {name: 'p6', value: body.city}, {name: 'p7', value: body.phone_no}]);
     }
     async getClientbyID(id: string) {
         

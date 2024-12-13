@@ -13,19 +13,19 @@ import { Role, Roles } from 'src/user/decorators/roles.decorator';
 export class MenuController {
     constructor(private readonly menu: MenuService) {}
     
-    @ApiOperation({ summary: 'Add a new dish' })
-    @ApiResponse({
-        status: 201,
-        description: 'The dish has been successfully created.',
-    })
-    @ApiResponse({
-        status: 400,
-        description: 'Invalid request payload.',
-    })
-    @Post('add')
-    async addDishes(@Body() body: menuDTO) {
-        return this.menu.addDishes(body);
-    }
+    // @ApiOperation({ summary: 'Add a new dish' })
+    // @ApiResponse({
+    //     status: 201,
+    //     description: 'The dish has been successfully created.',
+    // })
+    // @ApiResponse({
+    //     status: 400,
+    //     description: 'Invalid request payload.',
+    // })
+    // @Post('add')
+    // async addDishes(@Body() body: menuDTO) {
+    //     return this.menu.addDishes(body);
+    // }
 
     @Get('viewDishes')
     @ApiOperation({ summary: 'View all dishes' })

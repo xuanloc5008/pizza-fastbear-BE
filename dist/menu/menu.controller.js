@@ -21,9 +21,6 @@ let MenuController = class MenuController {
     constructor(menu) {
         this.menu = menu;
     }
-    async addDishes(body) {
-        return this.menu.addDishes(body);
-    }
     async viewDishes() {
         return this.menu.viewDishes();
     }
@@ -41,22 +38,6 @@ let MenuController = class MenuController {
     }
 };
 exports.MenuController = MenuController;
-__decorate([
-    (0, swagger_1.ApiOperation)({ summary: 'Add a new dish' }),
-    (0, swagger_1.ApiResponse)({
-        status: 201,
-        description: 'The dish has been successfully created.',
-    }),
-    (0, swagger_1.ApiResponse)({
-        status: 400,
-        description: 'Invalid request payload.',
-    }),
-    (0, common_1.Post)('add'),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [menu_dto_1.menuDTO]),
-    __metadata("design:returntype", Promise)
-], MenuController.prototype, "addDishes", null);
 __decorate([
     (0, common_1.Get)('viewDishes'),
     (0, swagger_1.ApiOperation)({ summary: 'View all dishes' }),

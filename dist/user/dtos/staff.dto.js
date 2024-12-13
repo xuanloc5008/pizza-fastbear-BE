@@ -16,14 +16,9 @@ class EmployeeDto {
 }
 exports.EmployeeDto = EmployeeDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({
-        description: 'Employee ID',
-        example: '2234312',
-    }),
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsUUID)(),
-    __metadata("design:type", String)
-], EmployeeDto.prototype, "e_id", void 0);
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], EmployeeDto.prototype, "store_id", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
         description: 'Last name of the employee',
@@ -78,20 +73,6 @@ __decorate([
 ], EmployeeDto.prototype, "phone_no", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        description: 'Store ID associated with the employee',
-        example: '123e4567-e89b-12d3-a456-426614174001',
-    }),
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsUUID)(),
-    __metadata("design:type", String)
-], EmployeeDto.prototype, "store_id", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsUUID)(),
-    __metadata("design:type", String)
-], EmployeeDto.prototype, "supervisor_id", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({
         description: 'Year of birth of the employee',
         example: 1990,
     }),
@@ -102,87 +83,26 @@ __decorate([
 ], EmployeeDto.prototype, "yob", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        description: 'Position of the employee',
-        example: 'salesman',
-    }),
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], EmployeeDto.prototype, "e_position", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsBoolean)(),
-    __metadata("design:type", Boolean)
-], EmployeeDto.prototype, "work_status", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.Min)(0),
-    __metadata("design:type", Number)
-], EmployeeDto.prototype, "salary_hourly", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.Min)(0),
-    __metadata("design:type", Number)
-], EmployeeDto.prototype, "salary_monthly", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsBoolean)(),
-    __metadata("design:type", Boolean)
-], EmployeeDto.prototype, "insurance", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], EmployeeDto.prototype, "shift", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], EmployeeDto.prototype, "evaluation_cycle", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.Min)(1),
-    __metadata("design:type", Number)
-], EmployeeDto.prototype, "ranking", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsUUID)(),
-    __metadata("design:type", String)
-], EmployeeDto.prototype, "evaluate_ID", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsDateString)(),
-    __metadata("design:type", String)
-], EmployeeDto.prototype, "evaluation_date", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.Min)(0),
-    (0, class_validator_1.Max)(100),
-    __metadata("design:type", Number)
-], EmployeeDto.prototype, "score", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], EmployeeDto.prototype, "feedbacks", void 0);
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, swagger_1.ApiProperty)({
-        description: 'Username',
+        description: 'Username for the employee login',
         example: 'test',
     }),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], EmployeeDto.prototype, "username", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
     (0, swagger_1.ApiProperty)({
-        description: "Password",
-        example: 'test',
+        description: 'Password for the employee login',
+        example: 'password123',
     }),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], EmployeeDto.prototype, "password", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Position of the employee',
+        example: 'salesman',
+    }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], EmployeeDto.prototype, "e_position", void 0);
 //# sourceMappingURL=staff.dto.js.map

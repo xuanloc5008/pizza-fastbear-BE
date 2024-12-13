@@ -22,11 +22,13 @@ export declare class UserController {
         message: string;
         access_token: string;
         role: any;
+        id: any;
     }>;
     loginStaff(body: loginDTO): Promise<{
         message: string;
         access_token: string;
         role: any;
+        id: any;
     }>;
     deleteClient(clientId: string): Promise<any>;
     deleteStaff(employeeId: string): Promise<any>;
