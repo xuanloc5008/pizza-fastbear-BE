@@ -12,8 +12,7 @@ import { Role, Roles } from 'src/user/decorators/roles.decorator';
 // @ApiBearerAuth('JWT Auth')
 export class MenuController {
     constructor(private readonly menu: MenuService) {}
-
-    @ApiBearerAuth('JWT Auth')
+    
     @ApiOperation({ summary: 'Add a new dish' })
     @ApiResponse({
         status: 201,

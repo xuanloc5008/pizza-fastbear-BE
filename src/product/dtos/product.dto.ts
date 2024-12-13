@@ -36,9 +36,17 @@ export class ProductDto {
     @IsNotEmpty()
     @IsNumber()
     @ApiProperty({ 
-        description: 'The remaining number of the product',
+        description: 'The supplier id of the product',
+        example: 1,
+        required: true
+    })
+    supplier_id: number;
+    @IsNotEmpty()
+    @IsNumber()
+    @ApiProperty({ 
+        description: 'The quantity of the product',
         example: 100,
         required: true
     })
-    remaining: number;
+    quantity: number;
 }

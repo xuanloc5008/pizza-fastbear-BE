@@ -3,5 +3,6 @@ export declare class ProductDto {
     price: number;
     mfg_date: string;
     exp_date: string;
-    remaining: number;
+    supplier_id: number;
+    quantity: number;
 }

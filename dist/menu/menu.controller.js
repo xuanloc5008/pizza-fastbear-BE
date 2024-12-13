@@ -42,7 +42,6 @@ let MenuController = class MenuController {
 };
 exports.MenuController = MenuController;
 __decorate([
-    (0, swagger_1.ApiBearerAuth)('JWT Auth'),
     (0, swagger_1.ApiOperation)({ summary: 'Add a new dish' }),
     (0, swagger_1.ApiResponse)({
         status: 201,

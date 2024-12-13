@@ -23,15 +23,17 @@ let ProductService = class ProductService {
                     @name = @p1, 
                     @price = @p2, 
                     @mfg_date = @p3, 
-                    @exp_date = @p4, 
-                @remaining = @p5;
+                    @exp_date = @p4,
+                    @supplier_id = @p5,
+                    @quantity = @p6;
         `;
             const parameters = [
                 { name: 'p1', value: product.name },
                 { name: 'p2', value: product.price },
                 { name: 'p3', value: product.mfg_date },
                 { name: 'p4', value: product.exp_date },
-                { name: 'p5', value: product.remaining },
+                { name: 'p5', value: product.supplier_id },
+                { name: 'p6', value: product.quantity },
             ];
             await this.dbService.query(query, parameters);
             return { message: 'Product added successfully.' };

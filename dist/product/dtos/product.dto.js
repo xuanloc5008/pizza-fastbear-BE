@@ -59,10 +59,20 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsNumber)(),
     (0, swagger_1.ApiProperty)({
-        description: 'The remaining number of the product',
+        description: 'The supplier id of the product',
+        example: 1,
+        required: true
+    }),
+    __metadata("design:type", Number)
+], ProductDto.prototype, "supplier_id", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsNumber)(),
+    (0, swagger_1.ApiProperty)({
+        description: 'The quantity of the product',
         example: 100,
         required: true
     }),
     __metadata("design:type", Number)
-], ProductDto.prototype, "remaining", void 0);
+], ProductDto.prototype, "quantity", void 0);
 //# sourceMappingURL=product.dto.js.map

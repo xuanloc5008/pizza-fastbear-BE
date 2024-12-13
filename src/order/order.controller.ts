@@ -15,35 +15,35 @@ import { AddDishesToOrderDto } from './dtos/Dishes.dto';
 export class OrderController {
     constructor(private readonly orderService: OrderService) {}
 
-    @Post('place-order')
-    @ApiOperation({ summary: 'Place a new order for a customer' })
-    @ApiResponse({
-        status: 201,
-        description: 'Order placed successfully',
-    })
-    @ApiResponse({
-        status: 400,
-        description: 'Invalid input data',
-    })
-    @ApiQuery({
-        name: 'store_id',
-        description: 'store ID',
-        required: true,
-        example: '123e4567-e89b-12d3-a456-426614174000',
-    })
-    @ApiQuery({
-        name: 'c_id',
-        description: 'Customer ID',
-        required: true,
-        example: '123e4567-e89b-12d3-a456-426614174000',
-    })
-    async placeOrder(
-        @Query('store_id') store_id: string,
-        @Query('c_id') c_id: string
-    ) {
-        console.log(c_id);
-        return await this.orderService.placeOrder(store_id, c_id);
-    }
+    // @Post('place-order')
+    // @ApiOperation({ summary: 'Place a new order for a customer' })
+    // @ApiResponse({
+    //     status: 201,
+    //     description: 'Order placed successfully',
+    // })
+    // @ApiResponse({
+    //     status: 400,
+    //     description: 'Invalid input data',
+    // })
+    // @ApiQuery({
+    //     name: 'store_id',
+    //     description: 'store ID',
+    //     required: true,
+    //     example: '123e4567-e89b-12d3-a456-426614174000',
+    // })
+    // @ApiQuery({
+    //     name: 'c_id',
+    //     description: 'Customer ID',
+    //     required: true,
+    //     example: '123e4567-e89b-12d3-a456-426614174000',
+    // })
+    // async placeOrder(
+    //     @Query('store_id') store_id: string,
+    //     @Query('c_id') c_id: string
+    // ) {
+    //     console.log(c_id);
+    //     return await this.orderService.placeOrder(store_id, c_id);
+    // }
 
     @Get('get-order-by-id')
     @ApiOperation({ summary: 'Retrieve orders for a specific salesman' })
@@ -83,40 +83,61 @@ export class OrderController {
     async updateOrder(@Query('id') id: string, @Body() body: UpdateOrderDto) {
         return await this.orderService.updateOrder(id, body);
     }
-    @Get('get-salesman')
-    @ApiOperation({ summary: 'Retrieve salesman ID by store ID' })
+    // @Get('get-salesman')
+    // @ApiOperation({ summary: 'Retrieve salesman ID by store ID' })
+    // @ApiResponse({
+    //     status: 200,
+    //     description: 'Salesman ID retrieved successfully',
+    // })
+    // async getSalesman(@Query('store_id') store_id: number) {
+    //     return await this.orderService.getSalesman(store_id);
+    // }
+    // @Get('get-shipper')
+    // @ApiOperation({ summary: 'Retrieve shipper ID by store ID' })
+    // @ApiResponse({
+    //     status: 200,
+    //     description: 'Shipper ID retrieved successfully',
+    // })
+    //     async getShipper(@Query('store_id') store_id: number) {
+    //     return await this.orderService.getShipper(store_id);
+    // }
+    // @Post('add-salesman-and-shipper')
+    // @ApiOperation({ summary: 'Add a salesman and shipper to an order' })
+    // @ApiResponse({
+    //     status: 200,
+    //     description: 'Salesman and shipper added to order successfully',
+    // })
+    // async addSalesmanAndShipper(@Query('order_id') order_id: number) {
+    //     return await this.orderService.addSalesmanandShipper(order_id);
+    // }
+    // @Post('add-dish-to-order-contain')
+    // @ApiOperation({ summary: 'Add a dish to an order' })
+    // @ApiResponse({
+    //     status: 200,
+    //     description: 'Dish added to order successfully',
+    // })
+    // async addDishToOrderContain(@Query('order_id') order_id: number, @Body() body: AddDishesToOrderDto) {
+    //     return await this.orderService.addDishesToOrderContain(order_id, body);
+    // }
+    @Post('order')
+    @ApiOperation({ summary: 'Order a dish' })
     @ApiResponse({
         status: 200,
-        description: 'Salesman ID retrieved successfully',
+        description: 'Dish ordered successfully',
     })
-    async getSalesman(@Query('store_id') store_id: number) {
-        return await this.orderService.getSalesman(store_id);
-    }
-    @Get('get-shipper')
-    @ApiOperation({ summary: 'Retrieve shipper ID by store ID' })
-    @ApiResponse({
-        status: 200,
-        description: 'Shipper ID retrieved successfully',
+    @ApiQuery({
+        name: 'order_id',
+        description: 'Order ID',
+        required: true,
+        example: '123e4567-e89b-12d3-a456-426614174000',
     })
-        async getShipper(@Query('store_id') store_id: number) {
-        return await this.orderService.getShipper(store_id);
-    }
-    @Post('add-salesman-and-shipper')
-    @ApiOperation({ summary: 'Add a salesman and shipper to an order' })
-    @ApiResponse({
-        status: 200,
-        description: 'Salesman and shipper added to order successfully',
-    })
-    async addSalesmanAndShipper(@Query('order_id') order_id: number, @Query('salesman_id') salesman_id: number, @Query('shipper_id') shipper_id: number) {
-        return await this.orderService.addSalesmanandShipper(order_id, salesman_id, shipper_id);
-    }
-    @Post('add-dish-to-order-contain')
-    @ApiOperation({ summary: 'Add a dish to an order' })
-    @ApiResponse({
-        status: 200,
-        description: 'Dish added to order successfully',
-    })
-    async addDishToOrderContain(@Query('order_id') order_id: number, @Body() body: AddDishesToOrderDto) {
-        return await this.orderService.addDishesToOrderContain(order_id, body);
+    @ApiQuery({
+        name: 'customer_id',
+        description: 'Customer ID',
+        required: true,
+        example: '123e4567-e89b-12d3-a456-426614174000',
+    })  
+    async order(@Query('order_id') order_id: string, @Query('customer_id') customer_id: string, @Body() body: AddDishesToOrderDto) {
+        return await this.orderService.order(order_id, customer_id, body);
     }
 }
