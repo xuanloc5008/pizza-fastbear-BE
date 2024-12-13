@@ -87,7 +87,7 @@ import { evaluating } from './dtos/evaluating.dto';
       }
     }
   
-    @Post('login')
+    @Post('client/login')
     @ApiOperation({ summary: 'User login' })
     @ApiResponse({
       status: 200,
@@ -112,6 +112,31 @@ import { evaluating } from './dtos/evaluating.dto';
       }
     }
   
+    @Post('staff/login')
+    @ApiOperation({ summary: 'User login' })
+    @ApiResponse({
+      status: 200,
+      description: 'User successfully logged in',
+    })
+    @ApiResponse({
+      status: 400,
+      description: 'Invalid login credentials',
+    })
+    @ApiBody({
+      type: loginDTO,
+      description: 'Login details',
+    })
+    async loginStaff(@Body() body: loginDTO) {
+      try {
+        return await this.userService.loginStaff(body);
+      } catch (error) {
+        throw new HttpException(
+          'Login failed',
+          HttpStatus.UNAUTHORIZED,
+        );
+      }
+    }
+
     @Delete('client/delete')
     @UseGuards(RolesGuard, JwtGuard)
     @Roles(Role.ADMIN, Role.CLIENT)

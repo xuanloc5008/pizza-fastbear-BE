@@ -81,22 +81,26 @@ let UserService = class UserService {
         }
     }
     async login(body) {
-        const user = await this.dbService.query('SELECT * FROM UserInfo WHERE username = @p1', [{ name: 'p1', value: body.username }]);
-        if (user.length === 0) {
-            return { message: 'User not found.' };
-        }
-        if (!user[0].password) {
-            return { message: 'Invalid user data: Password not found.' };
-        }
-        const isMatch = await bcrypt.compare(body.password, user[0].password);
-        if (!isMatch) {
-            return { message: 'Invalid credentials.' };
-        }
+        const user = await this.dbService.query('SELECT * FROM dbo.LoginCustomer(@p1, @p2)', [{ name: 'p1', value: body.username }, { name: 'p2', value: body.password }]);
         let role = user[0].role;
         role = role.trim();
         const payload = {
-            username: user[0].username,
-            sub: user[0].id,
+            id: user[0].id,
+            role: role,
+        };
+        const token = await this.jwtService.signAsync(payload);
+        return {
+            message: 'Login successful.',
+            access_token: token,
+            role: role
+        };
+    }
+    async loginStaff(body) {
+        const user = await this.dbService.query('SELECT * FROM dbo.LoginEmployee(@p1, @p2)', [{ name: 'p1', value: body.username }, { name: 'p2', value: body.password }]);
+        let role = user[0].role;
+        role = role.trim();
+        const payload = {
+            id: user[0].id,
             role: role,
         };
         const token = await this.jwtService.signAsync(payload);

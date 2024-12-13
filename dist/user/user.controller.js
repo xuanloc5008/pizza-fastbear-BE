@@ -55,6 +55,14 @@ let UserController = class UserController {
             throw new common_1.HttpException('Login failed', common_1.HttpStatus.UNAUTHORIZED);
         }
     }
+    async loginStaff(body) {
+        try {
+            return await this.userService.loginStaff(body);
+        }
+        catch (error) {
+            throw new common_1.HttpException('Login failed', common_1.HttpStatus.UNAUTHORIZED);
+        }
+    }
     async deleteClient(clientId) {
         try {
             return await this.userService.deleteClientbyID(clientId);
@@ -146,7 +154,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "registerStaff", null);
 __decorate([
-    (0, common_1.Post)('login'),
+    (0, common_1.Post)('client/login'),
     (0, swagger_1.ApiOperation)({ summary: 'User login' }),
     (0, swagger_1.ApiResponse)({
         status: 200,
@@ -165,6 +173,26 @@ __decorate([
     __metadata("design:paramtypes", [login_dto_1.loginDTO]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "login", null);
+__decorate([
+    (0, common_1.Post)('staff/login'),
+    (0, swagger_1.ApiOperation)({ summary: 'User login' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'User successfully logged in',
+    }),
+    (0, swagger_1.ApiResponse)({
+        status: 400,
+        description: 'Invalid login credentials',
+    }),
+    (0, swagger_1.ApiBody)({
+        type: login_dto_1.loginDTO,
+        description: 'Login details',
+    }),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [login_dto_1.loginDTO]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "loginStaff", null);
 __decorate([
     (0, common_1.Delete)('client/delete'),
     (0, common_1.UseGuards)(role_guards_1.RolesGuard, jwt_guards_1.JwtGuard),

@@ -20,9 +20,10 @@ export declare class UserService {
     }>;
     login(body: loginDTO): Promise<{
         message: string;
-        access_token?: undefined;
-        role?: undefined;
-    } | {
+        access_token: string;
+        role: any;
+    }>;
+    loginStaff(body: loginDTO): Promise<{
         message: string;
         access_token: string;
         role: any;
