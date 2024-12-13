@@ -81,6 +81,14 @@ export class EmployeeDto {
     @Max(2024)
     yob: number;
 
+    @ApiProperty({
+        description: 'Position of the employee',
+        example: 'salesman',
+    })
+    @IsOptional()
+    @IsString()
+    e_position?: string;
+
     // @ApiProperty({
     //     description: 'Work status of the employee (1 for active, 0 for inactive)',
     //     example: true,

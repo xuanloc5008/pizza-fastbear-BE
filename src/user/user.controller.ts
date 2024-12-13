@@ -138,9 +138,9 @@ import { evaluating } from './dtos/evaluating.dto';
     }
 
     @Delete('client/delete')
-    @UseGuards(RolesGuard, JwtGuard)
-    @Roles(Role.ADMIN, Role.CLIENT)
-    @ApiBearerAuth('JWT Auth')
+    // @UseGuards(RolesGuard, JwtGuard)
+    // @Roles(Role.ADMIN, Role.CLIENT)
+    // @ApiBearerAuth('JWT Auth')
     @ApiOperation({ summary: 'Delete a client' })
     @ApiResponse({
       status: 200,
@@ -162,10 +162,10 @@ import { evaluating } from './dtos/evaluating.dto';
     }
   
     @Delete('staff/delete')
-    @UseGuards(RolesGuard, JwtGuard)
-    @UseGuards(JwtGuard, RolesGuard)
-    @Roles(Role.ADMIN)
-    @ApiBearerAuth('JWT Auth')
+    // @UseGuards(RolesGuard, JwtGuard)
+    // @UseGuards(JwtGuard, RolesGuard)
+    // @Roles(Role.ADMIN)
+    // @ApiBearerAuth('JWT Auth')
     @ApiOperation({ summary: 'Delete a staff member' })
     @ApiResponse({
       status: 200,
@@ -187,9 +187,9 @@ import { evaluating } from './dtos/evaluating.dto';
     }
   
     @Put('client/update')
-    @ApiBearerAuth('JWT Auth')
-    @UseGuards(RolesGuard, JwtGuard)
-    @Roles(Role.ADMIN, Role.EMPLOYEE)
+    // @ApiBearerAuth('JWT Auth')
+    // @UseGuards(RolesGuard, JwtGuard)
+    // @Roles(Role.ADMIN, Role.EMPLOYEE)
     @ApiOperation({ summary: 'Update a client by ID' })
     @ApiResponse({
       status: 200,
@@ -214,9 +214,9 @@ import { evaluating } from './dtos/evaluating.dto';
     }
   
     @Put('staff/update')
-    @ApiBearerAuth('JWT Auth')
-    @UseGuards(RolesGuard, JwtGuard)
-    @Roles(Role.EMPLOYEE, Role.ADMIN)
+    // @ApiBearerAuth('JWT Auth')
+    // @UseGuards(RolesGuard, JwtGuard)
+    // @Roles(Role.EMPLOYEE, Role.ADMIN)
     @ApiOperation({ summary: 'Update a staff member by ID' })
     @ApiResponse({
       status: 200,
@@ -241,9 +241,9 @@ import { evaluating } from './dtos/evaluating.dto';
     }
     
     @Get('client/getInfo')
-    @ApiBearerAuth('JWT Auth')
-    @UseGuards(JwtGuard, RolesGuard) 
-    @Roles(Role.CLIENT)
+    // @ApiBearerAuth('JWT Auth')
+    // @UseGuards(JwtGuard, RolesGuard) 
+    // @Roles(Role.CLIENT)
     @ApiOperation({ summary: 'Get user information by ID' })
     @ApiResponse({
       status: 200,
@@ -257,9 +257,9 @@ import { evaluating } from './dtos/evaluating.dto';
         return this.userService.getClientbyID(customerID)
     }
     @Get('staff/getClientInfo')
-    @ApiBearerAuth('JWT Auth')
-    @UseGuards(JwtGuard, RolesGuard) 
-    @Roles(Role.EMPLOYEE, Role.ADMIN)
+    // @ApiBearerAuth('JWT Auth')
+    // @UseGuards(JwtGuard, RolesGuard) 
+    // @Roles(Role.EMPLOYEE, Role.ADMIN)
     @ApiOperation({ summary: 'Get user information' })
     @ApiResponse({
       status: 200,

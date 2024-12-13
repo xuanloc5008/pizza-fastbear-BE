@@ -17,8 +17,6 @@ const common_1 = require("@nestjs/common");
 const menu_service_1 = require("./menu.service");
 const menu_dto_1 = require("./dtos/menu.dto");
 const swagger_1 = require("@nestjs/swagger");
-const jwt_guards_1 = require("../user/guards/jwt.guards");
-const roles_decorator_1 = require("../user/decorators/roles.decorator");
 let MenuController = class MenuController {
     constructor(menu) {
         this.menu = menu;
@@ -163,9 +161,6 @@ __decorate([
 exports.MenuController = MenuController = __decorate([
     (0, common_1.Controller)('menu'),
     (0, swagger_1.ApiTags)('Menu'),
-    (0, common_1.UseGuards)(jwt_guards_1.JwtGuard),
-    (0, roles_decorator_1.Roles)(roles_decorator_1.Role.ADMIN, roles_decorator_1.Role.CLIENT, roles_decorator_1.Role.EMPLOYEE),
-    (0, swagger_1.ApiBearerAuth)('JWT Auth'),
     __metadata("design:paramtypes", [menu_service_1.MenuService])
 ], MenuController);
 //# sourceMappingURL=menu.controller.js.map

@@ -60,9 +60,19 @@ let UserService = class UserService {
             return { message: 'Employee has already been registered.' };
         }
         try {
-            await this.dbService.query(`INSERT INTO Employee (e_id, last_name, first_name, ward, district, city, phone_no, yob, username, password)
-                 VALUES (@p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10)`, [
-                { name: 'p1', value: body.e_id },
+            await this.dbService.query(`EXEC InsertEmployee 
+                    @store_id=@p1,
+                    @last_name=@p2, 
+                    @first_name=@p3, 
+                    @ward=@p4, 
+                    @district=@p5, 
+                    @city=@p6, 
+                    @phone_no=@p7, 
+                    @yob=@p8, 
+                    @username=@p9, 
+                    @password=@p10,
+                    @e_position=@p11`, [
+                { name: 'p1', value: store_id },
                 { name: 'p2', value: body.last_name },
                 { name: 'p3', value: body.first_name },
                 { name: 'p4', value: body.ward },
@@ -71,7 +81,8 @@ let UserService = class UserService {
                 { name: 'p7', value: body.phone_no },
                 { name: 'p8', value: body.yob },
                 { name: 'p9', value: body.username },
-                { name: 'p10', value: hashedPassword }
+                { name: 'p10', value: body.password },
+                { name: 'p11', value: body.e_position }
             ]);
             return { message: 'Successfully created.' };
         }

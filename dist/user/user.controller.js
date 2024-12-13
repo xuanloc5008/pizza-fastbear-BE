@@ -20,9 +20,6 @@ const database_service_1 = require("../database/database.service");
 const swagger_1 = require("@nestjs/swagger");
 const staff_dto_1 = require("./dtos/staff.dto");
 const login_dto_1 = require("./dtos/login.dto");
-const jwt_guards_1 = require("./guards/jwt.guards");
-const roles_decorator_1 = require("./decorators/roles.decorator");
-const role_guards_1 = require("./guards/role.guards");
 const evaluating_dto_1 = require("./dtos/evaluating.dto");
 let UserController = class UserController {
     constructor(userService, database) {
@@ -195,9 +192,6 @@ __decorate([
 ], UserController.prototype, "loginStaff", null);
 __decorate([
     (0, common_1.Delete)('client/delete'),
-    (0, common_1.UseGuards)(role_guards_1.RolesGuard, jwt_guards_1.JwtGuard),
-    (0, roles_decorator_1.Roles)(roles_decorator_1.Role.ADMIN, roles_decorator_1.Role.CLIENT),
-    (0, swagger_1.ApiBearerAuth)('JWT Auth'),
     (0, swagger_1.ApiOperation)({ summary: 'Delete a client' }),
     (0, swagger_1.ApiResponse)({
         status: 200,
@@ -214,10 +208,6 @@ __decorate([
 ], UserController.prototype, "deleteClient", null);
 __decorate([
     (0, common_1.Delete)('staff/delete'),
-    (0, common_1.UseGuards)(role_guards_1.RolesGuard, jwt_guards_1.JwtGuard),
-    (0, common_1.UseGuards)(jwt_guards_1.JwtGuard, role_guards_1.RolesGuard),
-    (0, roles_decorator_1.Roles)(roles_decorator_1.Role.ADMIN),
-    (0, swagger_1.ApiBearerAuth)('JWT Auth'),
     (0, swagger_1.ApiOperation)({ summary: 'Delete a staff member' }),
     (0, swagger_1.ApiResponse)({
         status: 200,
@@ -234,9 +224,6 @@ __decorate([
 ], UserController.prototype, "deleteStaff", null);
 __decorate([
     (0, common_1.Put)('client/update'),
-    (0, swagger_1.ApiBearerAuth)('JWT Auth'),
-    (0, common_1.UseGuards)(role_guards_1.RolesGuard, jwt_guards_1.JwtGuard),
-    (0, roles_decorator_1.Roles)(roles_decorator_1.Role.ADMIN, roles_decorator_1.Role.EMPLOYEE),
     (0, swagger_1.ApiOperation)({ summary: 'Update a client by ID' }),
     (0, swagger_1.ApiResponse)({
         status: 200,
@@ -254,9 +241,6 @@ __decorate([
 ], UserController.prototype, "updateClient", null);
 __decorate([
     (0, common_1.Put)('staff/update'),
-    (0, swagger_1.ApiBearerAuth)('JWT Auth'),
-    (0, common_1.UseGuards)(role_guards_1.RolesGuard, jwt_guards_1.JwtGuard),
-    (0, roles_decorator_1.Roles)(roles_decorator_1.Role.EMPLOYEE, roles_decorator_1.Role.ADMIN),
     (0, swagger_1.ApiOperation)({ summary: 'Update a staff member by ID' }),
     (0, swagger_1.ApiResponse)({
         status: 200,
@@ -274,9 +258,6 @@ __decorate([
 ], UserController.prototype, "updateStaff", null);
 __decorate([
     (0, common_1.Get)('client/getInfo'),
-    (0, swagger_1.ApiBearerAuth)('JWT Auth'),
-    (0, common_1.UseGuards)(jwt_guards_1.JwtGuard, role_guards_1.RolesGuard),
-    (0, roles_decorator_1.Roles)(roles_decorator_1.Role.CLIENT),
     (0, swagger_1.ApiOperation)({ summary: 'Get user information by ID' }),
     (0, swagger_1.ApiResponse)({
         status: 200,
@@ -293,9 +274,6 @@ __decorate([
 ], UserController.prototype, "getClientbyID", null);
 __decorate([
     (0, common_1.Get)('staff/getClientInfo'),
-    (0, swagger_1.ApiBearerAuth)('JWT Auth'),
-    (0, common_1.UseGuards)(jwt_guards_1.JwtGuard, role_guards_1.RolesGuard),
-    (0, roles_decorator_1.Roles)(roles_decorator_1.Role.EMPLOYEE, roles_decorator_1.Role.ADMIN),
     (0, swagger_1.ApiOperation)({ summary: 'Get user information' }),
     (0, swagger_1.ApiResponse)({
         status: 200,

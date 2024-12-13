@@ -9,6 +9,7 @@ export declare class EmployeeDto {
     store_id?: string;
     supervisor_id?: string;
     yob: number;
+    e_position?: string;
     work_status?: boolean;
     salary_hourly?: number;
     salary_monthly?: number;
