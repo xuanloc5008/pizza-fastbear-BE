@@ -34,6 +34,12 @@ let OrderController = class OrderController {
     async updateOrder(id, body) {
         return await this.orderService.updateOrder(id, body);
     }
+    async getSalesman(store_id) {
+        return await this.orderService.getSalesman(store_id);
+    }
+    async getShipper(store_id) {
+        return await this.orderService.getShipper(store_id);
+    }
     async order(order_id, customer_id, body) {
         return await this.orderService.order(order_id, customer_id, body);
     }
@@ -88,6 +94,30 @@ __decorate([
     __metadata("design:paramtypes", [String, updateorder_dto_1.UpdateOrderDto]),
     __metadata("design:returntype", Promise)
 ], OrderController.prototype, "updateOrder", null);
+__decorate([
+    (0, common_1.Get)('get-salesman'),
+    (0, swagger_1.ApiOperation)({ summary: 'Retrieve salesman ID by store ID' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Salesman ID retrieved successfully',
+    }),
+    __param(0, (0, common_1.Query)('store_id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], OrderController.prototype, "getSalesman", null);
+__decorate([
+    (0, common_1.Get)('get-shipper'),
+    (0, swagger_1.ApiOperation)({ summary: 'Retrieve shipper ID by store ID' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'Shipper ID retrieved successfully',
+    }),
+    __param(0, (0, common_1.Query)('store_id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], OrderController.prototype, "getShipper", null);
 __decorate([
     (0, common_1.Post)('order'),
     (0, swagger_1.ApiOperation)({ summary: 'Order a dish' }),

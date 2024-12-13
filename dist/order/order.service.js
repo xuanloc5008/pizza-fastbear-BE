@@ -93,7 +93,8 @@ let OrderService = class OrderService {
         try {
             let result = await this.dbService.query('SELECT * FROM dbo.GetSalesmanID(@p1)', [{ name: 'p1', value: strore_id }]);
             if (result.length === 1) {
-                return { message: 'Salesman retrieved successfully.', salesman_id: result[0] };
+                const sale = result[0].e_id;
+                return sale;
             }
             const randomIndex = Math.floor(Math.random() * result.length);
             const salesman_id = result[randomIndex];
@@ -108,7 +109,8 @@ let OrderService = class OrderService {
         try {
             let result = await this.dbService.query('SELECT * FROM dbo.GetShipperID(@p1)', [{ name: 'p1', value: store_id }]);
             if (result.length === 1) {
-                return { message: 'Shipper retrieved successfully.', shipper_id: result[0] };
+                const shipper_id = result[0].e_id;
+                return shipper_id;
             }
             const randomIndex = Math.floor(Math.random() * result.length);
             const shipper_id = result[randomIndex].e_id;
@@ -148,8 +150,11 @@ let OrderService = class OrderService {
         try {
             const oid = await this.placeOrder(store_id, customer_id);
             const storeID = Number(store_id);
+            console.log(storeID);
             const salesman_id = await this.getSalesman(storeID);
+            console.log(salesman_id);
             const shipper_id = await this.getShipper(storeID);
+            console.log(shipper_id);
             await this.addSalesmanandShipper(oid, salesman_id, shipper_id);
             await this.addDishesToOrderContain(oid, dto);
             return { message: 'Order placed successfully.' };

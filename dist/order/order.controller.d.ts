@@ -10,6 +10,8 @@ export declare class OrderController {
         message: string;
     }>;
     updateOrder(id: string, body: UpdateOrderDto): Promise<unknown>;
+    getSalesman(store_id: number): Promise<any>;
+    getShipper(store_id: number): Promise<any>;
     order(order_id: string, customer_id: string, body: AddDishesToOrderDto): Promise<{
         message: string;
         error?: undefined;

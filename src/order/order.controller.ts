@@ -83,24 +83,24 @@ export class OrderController {
     async updateOrder(@Query('id') id: string, @Body() body: UpdateOrderDto) {
         return await this.orderService.updateOrder(id, body);
     }
-    // @Get('get-salesman')
-    // @ApiOperation({ summary: 'Retrieve salesman ID by store ID' })
-    // @ApiResponse({
-    //     status: 200,
-    //     description: 'Salesman ID retrieved successfully',
-    // })
-    // async getSalesman(@Query('store_id') store_id: number) {
-    //     return await this.orderService.getSalesman(store_id);
-    // }
-    // @Get('get-shipper')
-    // @ApiOperation({ summary: 'Retrieve shipper ID by store ID' })
-    // @ApiResponse({
-    //     status: 200,
-    //     description: 'Shipper ID retrieved successfully',
-    // })
-    //     async getShipper(@Query('store_id') store_id: number) {
-    //     return await this.orderService.getShipper(store_id);
-    // }
+    @Get('get-salesman')
+    @ApiOperation({ summary: 'Retrieve salesman ID by store ID' })
+    @ApiResponse({
+        status: 200,
+        description: 'Salesman ID retrieved successfully',
+    })
+    async getSalesman(@Query('store_id') store_id: number) {
+        return await this.orderService.getSalesman(store_id);
+    }
+    @Get('get-shipper')
+    @ApiOperation({ summary: 'Retrieve shipper ID by store ID' })
+    @ApiResponse({
+        status: 200,
+        description: 'Shipper ID retrieved successfully',
+    })
+        async getShipper(@Query('store_id') store_id: number) {
+        return await this.orderService.getShipper(store_id);
+    }
     // @Post('add-salesman-and-shipper')
     // @ApiOperation({ summary: 'Add a salesman and shipper to an order' })
     // @ApiResponse({
